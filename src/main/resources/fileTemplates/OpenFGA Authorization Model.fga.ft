@@ -1,0 +1,2 @@
+model
+  schema ${OPENFGA_MODEL_VERSION}

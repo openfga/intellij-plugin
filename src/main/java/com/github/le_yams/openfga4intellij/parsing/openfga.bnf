@@ -1,0 +1,81 @@
+
+{
+
+  parserClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAParser"
+  parserUtilClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAParserUtil"
+
+  psiClassPrefix="OpenFGA"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.le_yams.openfga4intellij.psi"
+  psiImplPackage="com.github.le_yams.openfga4intellij.psi.impl"
+
+  elementTypeHolderClass="com.github.le_yams.openfga4intellij.psi.OpenFGATypes"
+  elementTypeClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAElementType"
+  tokenTypeClass="com.github.le_yams.openfga4intellij.parsing.OpenFGATokenType"
+
+    tokens = [
+        MODEL = "model";
+        SCHEMA = "schema";
+        SCHEMA_VERSION_V1_1 = "1.1";
+        TYPE = "type";
+        RELATIONS = "relations";
+        DEFINE = "define";
+
+        HASH = "#";
+        COLON = ":";
+        WILDCARD = "*";
+        L_SQUARE = "[";
+        R_SQUARE = "]";
+        COMMA = ",";
+
+        AND = "and";
+        OR = "or";
+        BUT_NOT = "but not";
+        FROM = "from";
+
+        ALPHA_NUMERIC = "regexp:[a-zA-Z0-9_-]+";
+
+        END_OF_LINE = "regexp:(\r\n)|\n";
+        WHITESPACE = "regexp:[\ \t]";
+        IDENT1= "regexp:((\ {2})|\t)";
+        IDENT2= "regexp:((\ {4})|(\t{2}))";
+
+        SINGLE_LINE_COMMENT = "regexp:[ \t]*#.*"
+    ]
+}
+
+openfgaFile ::= main
+main ::= modelHeader typeDefs newline?
+modelHeader ::= headerMultiLineComment? MODEL spacing? multiLineComment? indentedLine1 SCHEMA spacing schemaVersion spacing?
+typeDefs ::= typeDef*
+typeDef ::= multiLineComment? newline TYPE spacing typeIdentifier spacing? (indentedLine1 RELATIONS spacing? relationDeclaration+)?
+relationDeclaration ::= multiLineComment? indentedLine2 DEFINE spacing relationName spacing? COLON spacing? relationDef spacing?
+relationDef ::= (relationDefDirectAssignment | relationDefGrouping) relationDefPartials?
+relationDefPartials ::= relationDefPartialAllOr | relationDefPartialAllAnd | relationDefPartialAllButNot
+relationDefPartialAllOr ::= (spacing OR spacing relationDefGrouping)+
+relationDefPartialAllAnd ::= (spacing AND spacing relationDefGrouping)+
+relationDefPartialAllButNot ::= (spacing BUT_NOT spacing relationDefGrouping)+
+relationDefDirectAssignment ::= L_SQUARE spacing? relationDefTypeRestriction spacing? (COMMA spacing? relationDefTypeRestriction)* spacing? R_SQUARE
+relationDefRewrite ::= relationDefRelationOnRelatedObject | relationDefRelationOnSameObject
+relationDefRelationOnSameObject ::= rewriteComputedusersetName
+relationDefRelationOnRelatedObject ::= rewriteTuplesetComputedusersetName spacing FROM spacing rewriteTuplesetName
+relationDefTypeRestriction ::= relationDefTypeRestrictionWildcard | relationDefTypeRestrictionUserset | relationDefTypeRestrictionType
+relationDefTypeRestrictionType ::= identifier
+relationDefTypeRestrictionRelation ::= identifier
+relationDefTypeRestrictionWildcard ::= relationDefTypeRestrictionType COLON WILDCARD spacing?
+relationDefTypeRestrictionUserset ::= relationDefTypeRestrictionType HASH relationDefTypeRestrictionRelation
+relationDefGrouping ::= relationDefRewrite
+rewriteComputedusersetName ::= identifier
+rewriteTuplesetComputedusersetName ::= identifier
+rewriteTuplesetName ::= identifier
+relationName ::= identifier
+typeIdentifier ::= identifier
+identifier ::= ALPHA_NUMERIC+
+schemaVersion ::= SCHEMA_VERSION_V1_1
+spacing ::= WHITESPACE+
+indentedLine1 ::= newline IDENT1
+indentedLine2 ::= newline IDENT2
+newline ::= END_OF_LINE+
+comment ::= SINGLE_LINE_COMMENT
+headerMultiLineComment ::= comment (newline comment)*
+multiLineComment ::= newline comment (newline comment)*

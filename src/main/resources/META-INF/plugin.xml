@@ -1,0 +1,97 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.le_yams.openfga4intellij</id>
+
+    <name>OpenFga</name>
+
+    <vendor url="https://github.com/le-yams/openfga4intellij">Yann D'Isanto</vendor>
+
+    <description><![CDATA[
+    Unofficial <a href="https://openfga.dev/">OpenFGA</a> support plugin.<br>
+    <ul>
+        <li>DSL syntax support (associated with <i>.fga</i> and <i>.openfga</i> file extensions)</li>
+        <li>Authorization model dsl file template</li>
+        <li>Authorization model dsl live templates</li>
+        <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI to be installed)</li>
+        <li>Configure servers in OpenFGA tool window</li>
+    </ul>
+  ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType
+                name="OpenFGA File"
+                implementationClass="com.github.le_yams.openfga4intellij.OpenFGAFileType"
+                fieldName="INSTANCE"
+                language="OpenFGA"
+                extensions="fga;openfga"/>
+
+        <lang.commenter
+                language="OpenFGA"
+                implementationClass="com.github.le_yams.openfga4intellij.OpenFGACommenter"/>
+        <lang.parserDefinition
+                language="OpenFGA"
+                implementationClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="OpenFGA"
+                implementationClass="com.github.le_yams.openfga4intellij.OpenFGASyntaxHighlighterFactory"/>
+
+        <highlightVisitor implementation="com.github.le_yams.openfga4intellij.OpenFGAHighlightVisitor"/>
+
+        <colorSettingsPage
+                implementation="com.github.le_yams.openfga4intellij.OpenFGAColorSettingsPage"/>
+
+        <applicationService
+                serviceImplementation="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsState"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsConfigurable"
+                id="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsConfigurable"
+                displayName="OpenFGA"/>
+
+        <internalFileTemplate name="OpenFGA Authorization Model"/>
+        <defaultTemplatePropertiesProvider
+                implementation="com.github.le_yams.openfga4intellij.OpenFGADefaultTemplatePropertiesProvider"/>
+        <defaultLiveTemplates file="/liveTemplates/OpenFGA.xml"/>
+        <liveTemplateContext
+                contextId="OPENFGA_CONTEXT"
+                implementation="com.github.le_yams.openfga4intellij.OpenFGATemplateContext"/>
+
+        <toolWindow
+                factoryClass="com.github.le_yams.openfga4intellij.servers.ui.OpenFGAToolWindowFactory"
+                id="OpenFGA"
+                anchor="right"
+                icon="com.github.le_yams.openfga4intellij.OpenFGAIcons.TOOL_WINDOW">
+
+        </toolWindow>
+
+        <notificationGroup id="OpenFGA Notifications"
+                           displayType="BALLOON"/>
+    </extensions>
+    <actions>
+
+        <group
+                id="OpenFGAPopupGroup"
+                class="com.github.le_yams.openfga4intellij.actions.OpenFGAPopupGroup"
+                popup="true"
+                text="OpenFGA"/>
+
+        <action id="com.github.le_yams.openfga4intellij.actions.DslToJsonAction"
+                class="com.github.le_yams.openfga4intellij.actions.DslToJsonAction"
+                text="Generate JSON Authorization Model"
+                description="Generate authorisation model in JSON format">
+            <add-to-group group-id="OpenFGAPopupGroup"/>
+        </action>
+
+
+        <group id="wrapper">
+            <reference ref="OpenFGAPopupGroup"/>
+            <separator/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </group>
+
+    </actions>
+</idea-plugin>

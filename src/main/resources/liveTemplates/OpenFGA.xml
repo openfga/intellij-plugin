@@ -1,0 +1,60 @@
+<templateSet group="OpenFGA">
+
+
+    <template name="type" value="type $TYPE_NAME$" description="Create a simple type" toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="OPENFGA_CONTEXT" value="true"/>
+        </context>
+        <variable
+                name="TYPE_NAME"
+                expression=""
+                defaultValue="&#34;type_name&#34;"
+                alwaysStopAt="true"/>
+    </template>
+
+    <template name="type with relations" value="type $TYPE_NAME$&#10;  relations&#10;    define $RELATION_NAME$: $END$"
+              description="Create a type with relations" toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="OPENFGA_CONTEXT" value="true"/>
+        </context>
+        <variable
+                name="TYPE_NAME"
+                expression=""
+                defaultValue="&#34;type_name&#34;"
+                alwaysStopAt="true"/>
+        <variable
+                name="RELATION_NAME"
+                expression=""
+                defaultValue="&#34;relation_name&#34;"
+                alwaysStopAt="true"/>
+    </template>
+
+    <template name="relation" value="    define $RELATION_NAME$: $END$" description="Define a relation" toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="OPENFGA_CONTEXT" value="true"/>
+        </context>
+        <variable
+                name="RELATION_NAME"
+                expression=""
+                defaultValue="&#34;relation_name&#34;"
+                alwaysStopAt="true"/>
+    </template>
+
+    <template name="relations" value="  relations&#10;    define $RELATION_NAME$: $END$"
+              description="Create relations block" toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="OPENFGA_CONTEXT" value="true"/>
+        </context>
+        <variable
+                name="RELATION_NAME"
+                expression=""
+                defaultValue="&#34;relation_name&#34;"
+                alwaysStopAt="true"/>
+    </template>
+
+
+</templateSet>

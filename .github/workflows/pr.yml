@@ -1,0 +1,69 @@
+name: Pull Request build and test
+
+on:
+  pull_request:
+
+env:
+  PLUGIN_ARTIFACT_NAME: 'openfga4intellij_plugin'
+  DIST_FOLDER: 'build/distributions'
+
+jobs:
+  build:
+    name: Build OpenFGA plugin for IntelliJ Platform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Build the plugin using Gradle
+        run: ./gradlew buildPlugin
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: '${{ env.PLUGIN_ARTIFACT_NAME }}'
+          path: '${{ env.DIST_FOLDER }}/'
+
+
+  test_compatibility:
+    name: Test plugin compatibility with IntelliJ Platform 2024.1
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ide-version:
+          - ideaIC:2024.1
+          - ideaIU:2024.1
+          - goland:2024.1
+          - riderRD:2024.1
+          - ideaIC:LATEST-EAP-SNAPSHOT
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download built plugin artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PLUGIN_ARTIFACT_NAME }}
+          path: ${{ env.DIST_FOLDER }}
+
+      - name: Verify Plugin on IntelliJ Platforms
+        id: verify
+        uses: ChrisCarini/intellij-platform-plugin-verifier-action@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          ide-versions: ${{ matrix.ide-version }}
+          plugin-location: '${{ env.DIST_FOLDER }}/*.zip'
+
+      - name: Get log file path and print contents
+        run: |
+          echo "The verifier log file [${{steps.verify.outputs.verification-output-log-filename}}] contents : " ;
+          cat ${{steps.verify.outputs.verification-output-log-filename}}
