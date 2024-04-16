@@ -18,6 +18,8 @@
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
@@ -69,6 +71,10 @@
 
         <notificationGroup id="OpenFGA Notifications"
                            displayType="BALLOON"/>
+        <themeProvider id="60bcad08-acdb-40d0-b68a-151e2839f1c4" path="/OpenFGA_Dark.theme.json"/>
+
+        <multiHostInjector
+                implementation="com.github.le_yams.openfga4intellij.inject.OpenFGAYamlInjector"/>
     </extensions>
     <actions>
 

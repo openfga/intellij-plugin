@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.21"
     id("org.jetbrains.intellij") version "1.16.1"
     id("org.jetbrains.grammarkit") version "2022.3.2"
+
+    id("jacoco")
 }
 
 group = "com.github.le_yams"
@@ -17,6 +19,8 @@ dependencies {
     implementation("dev.openfga:openfga-sdk:0.4.1")
     implementation("org.dmfs:oauth2-essentials:0.22.0")
     implementation("org.dmfs:httpurlconnection-executor:1.21.3")
+
+    testImplementation("junit:junit:4.13.2")
 }
 
 
@@ -29,7 +33,7 @@ intellij {
     version.set("2023.3")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf("org.intellij.intelliLang", "org.jetbrains.plugins.yaml"))
 }
 
 grammarKit {
@@ -85,5 +89,13 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+
+    test {
+        finalizedBy(jacocoTestReport)
+    }
+
+    jacocoTestReport {
+        dependsOn(test)
     }
 }

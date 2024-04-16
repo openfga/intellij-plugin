@@ -19,7 +19,6 @@ public class OpenFGAColorSettingsPage  implements ColorSettingsPage {
             new AttributesDescriptor("Type identifier", OpenFGASyntaxHighlighter.TYPE_IDENTIFIER),
             new AttributesDescriptor("Relation name", OpenFGASyntaxHighlighter.RELATION_NAME),
             new AttributesDescriptor("Schema version", OpenFGASyntaxHighlighter.SCHEMA_VERSIONS),
-            new AttributesDescriptor("Bad value", OpenFGASyntaxHighlighter.BAD_CHARACTER)
     };
 
     @Nullable
@@ -37,7 +36,8 @@ public class OpenFGAColorSettingsPage  implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDemoText() {
-        return "model\n" +
+        return  "# Administrator model\n" +
+                "model\n" +
                 "  schema 1.1\n" +
                 "\n" +
                 "type user\n" +
