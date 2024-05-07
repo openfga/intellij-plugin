@@ -13,66 +13,62 @@
   elementTypeClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAElementType"
   tokenTypeClass="com.github.le_yams.openfga4intellij.parsing.OpenFGATokenType"
 
-    tokens = [
-        MODEL = "model";
-        SCHEMA = "schema";
-        SCHEMA_VERSION_V1_1 = "1.1";
-        TYPE = "type";
-        RELATIONS = "relations";
-        DEFINE = "define";
-
-        HASH = "#";
-        COLON = ":";
-        WILDCARD = "*";
-        L_SQUARE = "[";
-        R_SQUARE = "]";
-        COMMA = ",";
-
-        AND = "and";
-        OR = "or";
-        BUT_NOT = "but not";
-        FROM = "from";
-
-        ALPHA_NUMERIC = "regexp:[a-zA-Z0-9_-]+";
-
-        END_OF_LINE = "regexp:(\r\n)|\n";
-        WHITESPACE = "regexp:[\ \t]";
-        IDENT1= "regexp:((\ {2})|\t)";
-        IDENT2= "regexp:((\ {4})|(\t{2}))";
-
-        SINGLE_LINE_COMMENT = "regexp:[ \t]*#.*"
-    ]
 }
 
 openfgaFile ::= main
-main ::= modelHeader typeDefs newline?
-modelHeader ::= headerMultiLineComment? MODEL spacing? multiLineComment? indentedLine1 SCHEMA spacing schemaVersion spacing?
+main ::= headerMultiLineComment? newline? ( modelHeader | moduleHeader ) typeDefs newline? conditionDefs
+moduleHeader ::= MODULE moduleName
+modelHeader ::= MODEL multiLineComment? indentedLine1 SCHEMA SCHEMA_VERSION
 typeDefs ::= typeDef*
-typeDef ::= multiLineComment? newline TYPE spacing typeIdentifier spacing? (indentedLine1 RELATIONS spacing? relationDeclaration+)?
-relationDeclaration ::= multiLineComment? indentedLine2 DEFINE spacing relationName spacing? COLON spacing? relationDef spacing?
-relationDef ::= (relationDefDirectAssignment | relationDefGrouping) relationDefPartials?
-relationDefPartials ::= relationDefPartialAllOr | relationDefPartialAllAnd | relationDefPartialAllButNot
-relationDefPartialAllOr ::= (spacing OR spacing relationDefGrouping)+
-relationDefPartialAllAnd ::= (spacing AND spacing relationDefGrouping)+
-relationDefPartialAllButNot ::= (spacing BUT_NOT spacing relationDefGrouping)+
-relationDefDirectAssignment ::= L_SQUARE spacing? relationDefTypeRestriction spacing? (COMMA spacing? relationDefTypeRestriction)* spacing? R_SQUARE
+typeDef ::= multiLineComment? newline (EXTEND)? TYPE typeIdentifier (indentedLine1 RELATIONS relationDeclaration+)?
+relationDeclaration ::= multiLineComment? indentedLine2 DEFINE relationName COLON relationDef
+
+relationDef ::= (relationDefDirectAssignment | relationDefGrouping | relationRecurse) relationDefPartials?
+relationDefNoDirect ::= (relationDefGrouping | relationRecurseNoDirect) (relationDefPartials)?;
+relationDefPartials ::=
+    (OR (relationDefGrouping | relationRecurseNoDirect))+
+    | (AND (relationDefGrouping | relationRecurseNoDirect))+
+    | (BUT_NOT (relationDefGrouping | relationRecurseNoDirect));
+relationRecurse ::= L_PAREN (relationDef | relationRecurseNoDirect) R_PAREN;
+relationRecurseNoDirect ::= L_PAREN (relationDefNoDirect | relationRecurseNoDirect) R_PAREN;
+relationDefDirectAssignment ::= L_SQUARE relationDefTypeRestriction (COMMA relationDefTypeRestriction)* R_SQUARE
+
+relationDefTypeRestrictionBase ::= relationDefTypeRestrictionWildcard | relationDefTypeRestrictionUserset | relationDefTypeRestrictionRelation
+relationDefTypeRestriction ::= relationDefTypeRestrictionBase (WITH conditionNameRef)?
+
 relationDefRewrite ::= relationDefRelationOnRelatedObject | relationDefRelationOnSameObject
 relationDefRelationOnSameObject ::= rewriteComputedusersetName
-relationDefRelationOnRelatedObject ::= rewriteTuplesetComputedusersetName spacing FROM spacing rewriteTuplesetName
-relationDefTypeRestriction ::= relationDefTypeRestrictionWildcard | relationDefTypeRestrictionUserset | relationDefTypeRestrictionType
-relationDefTypeRestrictionType ::= identifier
-relationDefTypeRestrictionRelation ::= identifier
-relationDefTypeRestrictionWildcard ::= relationDefTypeRestrictionType COLON WILDCARD spacing?
-relationDefTypeRestrictionUserset ::= relationDefTypeRestrictionType HASH relationDefTypeRestrictionRelation
+relationDefRelationOnRelatedObject ::= rewriteTuplesetComputedusersetName FROM rewriteTuplesetName
+relationDefTypeRestrictionRelation ::= typeReference
+relationDefTypeRestrictionWildcard ::= typeReference COLON WILDCARD
+relationDefTypeRestrictionUserset ::= typeReference HASH relationDefTypeRestrictionRelation
 relationDefGrouping ::= relationDefRewrite
 rewriteComputedusersetName ::= identifier
 rewriteTuplesetComputedusersetName ::= identifier
 rewriteTuplesetName ::= identifier
+moduleName ::= identifier
 relationName ::= identifier
 typeIdentifier ::= identifier
-identifier ::= ALPHA_NUMERIC+
-schemaVersion ::= SCHEMA_VERSION_V1_1
-spacing ::= WHITESPACE+
+typeReference ::= identifier
+
+// Conditions
+// https://github.com/google/cel-spec/blob/f9ce1ea675260361a667d29b79ee15fd9768028a/doc/langdef.md#syntax
+conditionDefs ::= conditions*
+conditions ::= (
+    (headerMultiLineComment newline)?
+    CONDITION conditionName
+    L_PAREN conditionParameter (COMMA conditionParameter)* newline? R_PAREN
+    CONDITION_EXPRESSION
+    ) newline?
+conditionName ::= identifier
+conditionNameRef ::= identifier
+conditionParameter ::= newline? parameterName COLON parameterType
+parameterName ::= identifier
+parameterType ::= parameterTypeNames | (("map"|"list") LESS parameterTypeNames GREATER)
+parameterTypeNames ::= ("bool"|"string"|"int"|"uint"|"double"|"duration"|"timestamp"|"ipaddress")
+
+// Simple tokens
+identifier ::= ALPHA_NUMERIC | MODEL | SCHEMA | TYPE | RELATION | MODULE | EXTEND
 indentedLine1 ::= newline IDENT1
 indentedLine2 ::= newline IDENT2
 newline ::= END_OF_LINE+

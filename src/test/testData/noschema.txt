@@ -1,0 +1,5 @@
+OpenFGA File
+  PsiElement(OpenFGA.MODEL)('model')
+  PsiElement(OpenFGA.END_OF_LINE)('\n')
+  PsiErrorElement:OpenFGA.END_OF_LINE, OpenFGA.IDENT1 or OpenFGA.SINGLE_LINE_COMMENT expected
+    <empty list>

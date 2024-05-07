@@ -1,0 +1,75 @@
+<scheme name="OpenFGA_Dark" version="142" parent_scheme="Darcula">
+    <colors>
+        <option name="CARET_ROW_COLOR" value="3A3D41" />
+        <option name="GUTTER_BACKGROUND" value="141517" />
+    </colors>
+    <attributes>
+        <option name="TEXT">
+            <value>
+                <option name="FOREGROUND" value="EEffff" />
+                <option name="BACKGROUND" value="141517" />
+                <option name="EFFECT_TYPE" value="5" />
+            </value>
+        </option>
+        <option name="INJECTED_LANGUAGE_FRAGMENT">
+            <value>
+                <option name="BACKGROUND" value="141517" />
+            </value>
+        </option>
+        <option name="OPENFGA_KEYWORD">
+            <value>
+                <option name="FOREGROUND" value="AAAAAA" />
+            </value>
+        </option>
+        <option name="OPENFGA_MODULE_NAME">
+            <value>
+                <option name="FOREGROUND" value="79ED83" />
+            </value>
+        </option>
+        <option name="OPENFGA_COMMENTS">
+            <value>
+                <option name="FOREGROUND" value="737981" />
+            </value>
+        </option>
+        <option name="OPENFGA_TYPE_IDENTIFIER">
+            <value>
+                <option name="FOREGROUND" value="79ED83" />
+            </value>
+        </option>
+        <option name="OPENFGA_TYPE_REFERENCE">
+            <value>
+                <option name="FOREGROUND" value="CEEC93" />
+            </value>
+        </option>
+        <option name="OPENFGA_RELATION_NAME">
+            <value>
+                <option name="FOREGROUND" value="20F1F5" />
+            </value>
+        </option>
+        <option name="OPENFGA_RELATION_REFERENCE">
+            <value>
+                <option name="FOREGROUND" value="FFFFFF" />
+            </value>
+        </option>
+        <option name="OPENFGA_CONDITION_IDENTIFIER">
+            <value>
+                <option name="FOREGROUND" value="79ED83" />
+            </value>
+        </option>
+        <option name="OPENFGA_CONDITION_REFERENCE">
+            <value>
+                <option name="FOREGROUND" value="CEEC93" />
+            </value>
+        </option>
+        <option name="OPENFGA_CONDITION_PARAM_IDENTIFIER">
+            <value>
+                <option name="FOREGROUND" value="20F1F5" />
+            </value>
+        </option>
+        <option name="OPENFGA_CONDITION_PARAM_TYPE">
+            <value>
+                <option name="FOREGROUND" value="AAAAAA" />
+            </value>
+        </option>
+    </attributes>
+</scheme>
