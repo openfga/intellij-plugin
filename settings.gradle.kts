@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "openfga4intellij"
+rootProject.name = "openfgaintellijplugin"
