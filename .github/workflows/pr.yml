@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  PLUGIN_ARTIFACT_NAME: 'openfga4intellij_plugin'
+  PLUGIN_ARTIFACT_NAME: 'openfga_intellij_plugin'
   DIST_FOLDER: 'build/distributions'
 
 jobs:

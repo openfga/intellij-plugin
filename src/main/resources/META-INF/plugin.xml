@@ -1,15 +1,15 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.le_yams.openfga4intellij</id>
+    <id>dev.openfga.intellijplugin</id>
 
-    <name>OpenFga</name>
+    <name>OpenFGA</name>
 
-    <vendor url="https://github.com/le-yams/openfga4intellij">Yann D'Isanto</vendor>
+    <vendor url="https://github.com/openfga/intellij-plugin">OpenFGA</vendor>
 
     <description><![CDATA[
-    Unofficial <a href="https://openfga.dev/">OpenFGA</a> support plugin.<br>
+    Official <a href="https://openfga.dev/">OpenFGA</a> support plugin.<br>
     <ul>
-        <li>DSL syntax support (associated with <i>.fga</i> and <i>.openfga</i> file extensions)</li>
+        <li>DSL syntax support and validation</li>
         <li>Authorization model dsl file template</li>
         <li>Authorization model dsl live templates</li>
         <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI to be installed)</li>
@@ -24,48 +24,48 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType
                 name="OpenFGA File"
-                implementationClass="com.github.le_yams.openfga4intellij.OpenFGAFileType"
+                implementationClass="dev.openfga.intellijplugin.OpenFGAFileType"
                 fieldName="INSTANCE"
                 language="OpenFGA"
                 extensions="fga;openfga"/>
 
         <lang.commenter
                 language="OpenFGA"
-                implementationClass="com.github.le_yams.openfga4intellij.OpenFGACommenter"/>
+                implementationClass="dev.openfga.intellijplugin.OpenFGACommenter"/>
         <lang.parserDefinition
                 language="OpenFGA"
-                implementationClass="com.github.le_yams.openfga4intellij.parsing.OpenFGAParserDefinition"/>
+                implementationClass="dev.openfga.intellijplugin.parsing.OpenFGAParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="OpenFGA"
-                implementationClass="com.github.le_yams.openfga4intellij.OpenFGASyntaxHighlighterFactory"/>
+                implementationClass="dev.openfga.intellijplugin.OpenFGASyntaxHighlighterFactory"/>
 
-        <highlightVisitor implementation="com.github.le_yams.openfga4intellij.OpenFGAHighlightVisitor"/>
+        <highlightVisitor implementation="dev.openfga.intellijplugin.OpenFGAHighlightVisitor"/>
 
         <colorSettingsPage
-                implementation="com.github.le_yams.openfga4intellij.OpenFGAColorSettingsPage"/>
+                implementation="dev.openfga.intellijplugin.OpenFGAColorSettingsPage"/>
 
         <applicationService
-                serviceImplementation="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsState"/>
+                serviceImplementation="dev.openfga.intellijplugin.settings.OpenFGASettingsState"/>
 
         <applicationConfigurable
                 parentId="tools"
-                instance="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsConfigurable"
-                id="com.github.le_yams.openfga4intellij.settings.OpenFGASettingsConfigurable"
+                instance="dev.openfga.intellijplugin.settings.OpenFGASettingsConfigurable"
+                id="dev.openfga.intellijplugin.settings.OpenFGASettingsConfigurable"
                 displayName="OpenFGA"/>
 
         <internalFileTemplate name="OpenFGA Authorization Model"/>
         <defaultTemplatePropertiesProvider
-                implementation="com.github.le_yams.openfga4intellij.OpenFGADefaultTemplatePropertiesProvider"/>
+                implementation="dev.openfga.intellijplugin.OpenFGADefaultTemplatePropertiesProvider"/>
         <defaultLiveTemplates file="/liveTemplates/OpenFGA.xml"/>
         <liveTemplateContext
                 contextId="OPENFGA_CONTEXT"
-                implementation="com.github.le_yams.openfga4intellij.OpenFGATemplateContext"/>
+                implementation="dev.openfga.intellijplugin.OpenFGATemplateContext"/>
 
         <toolWindow
-                factoryClass="com.github.le_yams.openfga4intellij.servers.ui.OpenFGAToolWindowFactory"
+                factoryClass="dev.openfga.intellijplugin.servers.ui.OpenFGAToolWindowFactory"
                 id="OpenFGA"
                 anchor="right"
-                icon="com.github.le_yams.openfga4intellij.OpenFGAIcons.TOOL_WINDOW">
+                icon="dev.openfga.intellijplugin.OpenFGAIcons.TOOL_WINDOW">
 
         </toolWindow>
 
@@ -74,18 +74,18 @@
         <themeProvider id="60bcad08-acdb-40d0-b68a-151e2839f1c4" path="/OpenFGA_Dark.theme.json"/>
 
         <multiHostInjector
-                implementation="com.github.le_yams.openfga4intellij.inject.OpenFGAYamlInjector"/>
+                implementation="dev.openfga.intellijplugin.inject.OpenFGAYamlInjector"/>
     </extensions>
     <actions>
 
         <group
                 id="OpenFGAPopupGroup"
-                class="com.github.le_yams.openfga4intellij.actions.OpenFGAPopupGroup"
+                class="dev.openfga.intellijplugin.actions.OpenFGAPopupGroup"
                 popup="true"
                 text="OpenFGA"/>
 
-        <action id="com.github.le_yams.openfga4intellij.actions.DslToJsonAction"
-                class="com.github.le_yams.openfga4intellij.actions.DslToJsonAction"
+        <action id="dev.openfga.intellijplugin.actions.DslToJsonAction"
+                class="dev.openfga.intellijplugin.actions.DslToJsonAction"
                 text="Generate JSON Authorization Model"
                 description="Generate authorisation model in JSON format">
             <add-to-group group-id="OpenFGAPopupGroup"/>

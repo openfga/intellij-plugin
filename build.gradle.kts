@@ -8,8 +8,8 @@ plugins {
     id("jacoco")
 }
 
-group = "com.github.le_yams"
-version = "0.2.4"
+group = "dev.openfga.intellijplugin"
+version = "0.2.5"
 
 repositories {
     mavenCentral()
@@ -62,17 +62,17 @@ tasks {
     }
 
     generateLexer {
-        sourceFile.set(file("src/main/java/com/github/le_yams/openfga4intellij/parsing/OpenFGALexer.flex"))
-        targetDir.set("src/generated/java/com/github/le_yams/openfga4intellij/parsing")
+        sourceFile.set(file("src/main/java/dev/openfga/intellijplugin/parsing/OpenFGALexer.flex"))
+        targetDir.set("src/generated/java/dev/openfga/intellijplugin/parsing")
         targetClass.set("OpenFGALexer")
         purgeOldFiles.set(true)
     }
 
     generateParser {
-        sourceFile.set(file("src/main/java/com/github/le_yams/openfga4intellij/parsing/openfga.bnf"))
+        sourceFile.set(file("src/main/java/dev/openfga/intellijplugin/parsing/openfga.bnf"))
         targetRoot.set("src/generated/java")
-        pathToParser.set("com/github/le_yams/openfga4intellij/parsing/RustParser.java")
-        pathToPsiRoot.set("com/github/le_yams/openfga4intellij/psi")
+        pathToParser.set("dev/openfga/intellijplugin/parsing/RustParser.java")
+        pathToPsiRoot.set("dev/openfga/intellijplugin/psi")
         purgeOldFiles.set(true)
     }
 
