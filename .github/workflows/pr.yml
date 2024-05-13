@@ -22,7 +22,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build the plugin using Gradle
-        run: ./gradlew buildPlugin
+        run: ./gradlew check buildPlugin
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -39,11 +39,16 @@ jobs:
     strategy:
       matrix:
         ide-version:
-          - ideaIC:2024.1
-          - ideaIU:2024.1
+          - clion:2024.1
           - goland:2024.1
-          - riderRD:2024.1
+          - ideaIC:2024.1
           - ideaIC:LATEST-EAP-SNAPSHOT
+          - ideaIU:2024.1
+          - phpstorm:2024.1
+          - pycharmPC:2024.1
+          - pycharmPY:2024.1
+          - riderRD:2024.1
+          - webstorm:2024.1
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
