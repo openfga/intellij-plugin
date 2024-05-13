@@ -6,4 +6,5 @@ public record Oidc(
         String clientSecret,
         String scope
 ) {
+    public static final Oidc EMPTY = new Oidc("", "", "", "");
 }

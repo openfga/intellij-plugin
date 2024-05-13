@@ -1,62 +1,28 @@
 package dev.openfga.intellijplugin.servers.model;
 
-import com.intellij.credentialStore.CredentialAttributes;
-import com.intellij.credentialStore.CredentialAttributesKt;
-import com.intellij.credentialStore.Credentials;
-import com.intellij.ide.passwordSafe.PasswordSafe;
-import org.jetbrains.annotations.NotNull;
-
+import java.util.Objects;
 import java.util.UUID;
 
-public class Server {
+public final class Server {
+
     private String id;
     private String name;
+    private String url;
     private AuthenticationMethod authenticationMethod = AuthenticationMethod.NONE;
+    private String apiToken;
+    private Oidc oidc = Oidc.EMPTY;
 
     public Server() {
-        this("new server");
-    }
-
-    public Server(String name) {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Server(String id, String name, String url, AuthenticationMethod authenticationMethod, String apiToken, Oidc oidc) {
+        this.id = id;
         this.name = name;
-    }
-
-    public String loadUrl() {
-        var credentials = getCredentials(CredentialKey.URL);
-        if (credentials == null) {
-            return "";
-        }
-        return credentials.getPasswordAsString();
-    }
-
-    public void storeUrl(String url) {
-        var attributes = getCredentialAttributes(CredentialKey.URL);
-        PasswordSafe.getInstance().set(attributes, new Credentials(id, url));
-    }
-
-    public String loadApiToken() {
-        var credentials = getCredentials(CredentialKey.API_TOKEN);
-        if (credentials == null) {
-            return "";
-        }
-        return credentials.getPasswordAsString();
-    }
-
-    public void storeApiToken(String token) {
-        var attributes = getCredentialAttributes(CredentialKey.API_TOKEN);
-        PasswordSafe.getInstance().set(attributes, new Credentials(id, token));
-    }
-
-    public Credentials getCredentials(String keySuffix) {
-        CredentialAttributes attributes = getCredentialAttributes(keySuffix);
-        return PasswordSafe.getInstance().get(attributes);
-    }
-
-    @NotNull
-    private CredentialAttributes getCredentialAttributes(String keySuffix) {
-        var key = id + "_" + keySuffix;
-        return new CredentialAttributes(CredentialAttributesKt.generateServiceName("OpenFGAServer", key));
+        this.url = url;
+        this.authenticationMethod = authenticationMethod;
+        this.apiToken = apiToken;
+        this.oidc = oidc;
     }
 
     public String getId() {
@@ -75,35 +41,39 @@ public class Server {
         this.name = name;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public AuthenticationMethod getAuthenticationMethod() {
         return authenticationMethod;
     }
 
     public void setAuthenticationMethod(AuthenticationMethod authenticationMethod) {
+        if (authenticationMethod == null) {
+            authenticationMethod = AuthenticationMethod.NONE;
+        }
         this.authenticationMethod = authenticationMethod;
     }
 
-    public Oidc loadOidc() {
-        var credentials = getCredentials(CredentialKey.OIDC_CLIENT);
-        var clientId = credentials != null ? credentials.getUserName() : "";
-        var clientSecret = credentials != null ? credentials.getPasswordAsString() : "";
-
-        credentials = getCredentials(CredentialKey.OIDC_TOKEN_ENDPOINT);
-        var tokenEndpoint = credentials != null ? credentials.getPasswordAsString() : "";
-
-        credentials = getCredentials(CredentialKey.OIDC_SCOPE);
-        var audience = credentials != null ? credentials.getPasswordAsString() : "";
-
-        return new Oidc(tokenEndpoint, clientId, clientSecret, audience);
+    public String getApiToken() {
+        return apiToken;
     }
 
-    public void storeOidc(Oidc oidc) {
-        var attributes = getCredentialAttributes(CredentialKey.OIDC_CLIENT);
-        PasswordSafe.getInstance().set(attributes, new Credentials(oidc.clientId(), oidc.clientSecret()));
-        attributes = getCredentialAttributes(CredentialKey.OIDC_TOKEN_ENDPOINT);
-        PasswordSafe.getInstance().set(attributes, new Credentials(id, oidc.tokenEndpoint()));
-        attributes = getCredentialAttributes(CredentialKey.OIDC_SCOPE);
-        PasswordSafe.getInstance().set(attributes, new Credentials(id, oidc.scope()));
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+    public Oidc getOidc() {
+        return oidc;
+    }
+
+    public void setOidc(Oidc oidc) {
+        this.oidc = oidc;
     }
 
     @Override
@@ -111,12 +81,16 @@ public class Server {
         return name;
     }
 
-    private interface CredentialKey {
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Server that = (Server) object;
+        return Objects.equals(id, that.id);
+    }
 
-        String URL = "url";
-        String API_TOKEN = "apiToken";
-        String OIDC_CLIENT = "oidc_client";
-        String OIDC_TOKEN_ENDPOINT = "oidc_token_endpoint";
-        String OIDC_SCOPE = "oidc_scope";
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
