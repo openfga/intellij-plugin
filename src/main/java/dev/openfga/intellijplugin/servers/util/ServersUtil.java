@@ -23,9 +23,9 @@ public class ServersUtil {
         }
     }
 
-    private static OpenFgaClient createClient(Server server) throws FgaInvalidParameterException {
+    public static OpenFgaClient createClient(Server server) throws FgaInvalidParameterException {
         var clientConfiguration = new ClientConfiguration()
-                .apiUrl(server.loadUrl())
+                .apiUrl(server.getUrl())
                 .credentials(getCredentials(server));
 
         return new OpenFgaClient(clientConfiguration);
@@ -34,9 +34,9 @@ public class ServersUtil {
     private static Credentials getCredentials(Server server) {
         return switch (server.getAuthenticationMethod()) {
             case NONE -> new Credentials();
-            case API_TOKEN -> new Credentials(new ApiToken(server.loadApiToken()));
+            case API_TOKEN -> new Credentials(new ApiToken(server.getApiToken()));
             case OIDC -> {
-                var oidc = server.loadOidc();
+                var oidc = server.getOidc();
                 yield new Credentials(new ClientCredentials()
                         .apiTokenIssuer(oidc.tokenEndpoint())
                         .clientId(oidc.clientId())

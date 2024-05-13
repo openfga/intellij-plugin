@@ -1,10 +1,5 @@
 package dev.openfga.intellijplugin.cli.tasks;
 
-import dev.openfga.intellijplugin.Notifier;
-import dev.openfga.intellijplugin.cli.CliProcess;
-import dev.openfga.intellijplugin.cli.CliProcessTask;
-import dev.openfga.intellijplugin.cli.CliTaskException;
-import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
 import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
@@ -17,6 +12,12 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import dev.openfga.intellijplugin.cli.CliProcess;
+import dev.openfga.intellijplugin.cli.CliProcessTask;
+import dev.openfga.intellijplugin.cli.CliTaskException;
+import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
+import dev.openfga.intellijplugin.util.notifications.Notifier;
+import dev.openfga.intellijplugin.util.notifications.ProjectNotifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
     private final PsiFile dslFile;
     private final Path targetPath;
     private final CliProcess process;
+    private final Notifier notifier;
 
     public static Optional<DslToJsonTask> create(@NotNull PsiFile dslFile, @NotNull Path dslFilePath) {
         var targetName = computeJsonGeneratedFileName(dslFile);
@@ -52,6 +54,7 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
         super(dslFile.getProject(), "Generating json model for " + dslFile.getName(), true);
         this.dslFile = dslFile;
         this.targetPath = targetPath;
+        notifier = new ProjectNotifier(dslFile.getProject());
 
         process = new CliProcess(
                 OpenFGASettingsState.getInstance().requireCli(),
@@ -74,7 +77,7 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
         try {
             process.start(indicator, this);
         } catch (CliTaskException e) {
-            notifyError(dslFile, e.getMessage());
+            notifier.notifyError("Error generating json authorization model", e);
         }
     }
 
@@ -84,11 +87,11 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
     }
 
     @Override
-    public Void onSuccess(File stdOutFile, File stdErrFile) throws IOException, CliTaskException {
+    public Void onSuccess(File stdOutFile, File stdErrFile) throws IOException {
         Files.copy(stdOutFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         ApplicationManager.getApplication().invokeLater(
                 () -> show(new GeneratedFile(dslFile.getProject(), targetPath)),
-                ModalityState.NON_MODAL);
+                ModalityState.nonModal());
         return null;
     }
 
@@ -100,10 +103,6 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
         } catch (IOException e) {
             return new CliTaskException("unexpected error");
         }
-    }
-
-    private static void notifyError(PsiFile psiFile, String message) {
-        Notifier.notifyError(psiFile.getProject(), "Error generating json authorization model", message);
     }
 
     private void show(GeneratedFile generatedFile) {
