@@ -41,6 +41,14 @@
 
         <highlightVisitor implementation="dev.openfga.intellijplugin.OpenFGAHighlightVisitor"/>
 
+        <externalAnnotator
+                language="OpenFGA"
+                implementationClass="dev.openfga.intellijplugin.language.OpenFGAAnnotator"/>
+
+        <externalAnnotator
+                language="yaml"
+                implementationClass="dev.openfga.intellijplugin.language.OpenFGAStoreAnnotator"/>
+
         <colorSettingsPage
                 implementation="dev.openfga.intellijplugin.OpenFGAColorSettingsPage"/>
 
