@@ -10,7 +10,7 @@ import com.intellij.psi.PsiFile;
 import dev.openfga.language.errors.DslErrorsException;
 import dev.openfga.language.errors.ParsingError;
 import dev.openfga.language.errors.StartEnd;
-import dev.openfga.language.validation.DslValidator;
+import dev.openfga.language.validation.ModelValidator;
 import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +49,7 @@ public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? exte
         }
 
         try {
-            DslValidator.validate(collectedInfo);
+            ModelValidator.validateDsl(collectedInfo);
         } catch (IOException e) {
             throw new RuntimeException("Failure when attempting to validate model", e);
         } catch (DslErrorsException e) {

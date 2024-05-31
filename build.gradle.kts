@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.0"
+version = "0.1.1"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
@@ -21,7 +21,9 @@ dependencies {
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.14.0")
 
-    implementation(files("libs/java-0.0.1.jar"))
+    // Until, https://github.com/openfga/language/pkg/java is published,
+    // the plugin cannot be built without manually building language and providing the jar file
+    implementation(files("libs/openfga-language-v0.2.0-beta.0.jar"))
 
     testImplementation("junit:junit:4.13.2")
 }
