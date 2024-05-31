@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.0"
+version = "0.1.1"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
@@ -15,9 +15,15 @@ repositories {
 }
 
 dependencies {
+    implementation("org.antlr:antlr4:4.13.1")
     implementation("dev.openfga:openfga-sdk:0.4.2")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
+
+    // Until, https://github.com/openfga/language/pkg/java is published,
+    // the plugin cannot be built without manually building language and providing the jar file
+    implementation(files("libs/language-0.0.1.jar"))
 
     testImplementation("junit:junit:4.13.2")
 }
@@ -28,7 +34,10 @@ intellij {
     version.set("2023.3")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf("org.intellij.intelliLang", "org.jetbrains.plugins.yaml"))
+    plugins.set(listOf(
+        "org.intellij.intelliLang",
+        "org.jetbrains.plugins.yaml",
+        "com.intellij.java"))
 }
 
 grammarKit {

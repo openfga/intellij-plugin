@@ -15,7 +15,15 @@
         <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI to be installed)</li>
         <li>Configure servers in OpenFGA tool window</li>
     </ul>
-  ]]></description>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <h2>New Features</h2>
+    <ul>
+      <li>Validation for model files</li>
+      <li>Validation for the model field in store files</li>
+    </ul>
+    ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
@@ -40,6 +48,14 @@
                 implementationClass="dev.openfga.intellijplugin.OpenFGASyntaxHighlighterFactory"/>
 
         <highlightVisitor implementation="dev.openfga.intellijplugin.OpenFGAHighlightVisitor"/>
+
+        <externalAnnotator
+                language="OpenFGA"
+                implementationClass="dev.openfga.intellijplugin.language.OpenFGAAnnotator"/>
+
+        <externalAnnotator
+                language="yaml"
+                implementationClass="dev.openfga.intellijplugin.language.OpenFGAStoreAnnotator"/>
 
         <colorSettingsPage
                 implementation="dev.openfga.intellijplugin.OpenFGAColorSettingsPage"/>
