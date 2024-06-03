@@ -1,9 +1,9 @@
 plugins {
     id("java")
     id("jacoco")
-    id("org.jetbrains.kotlin.jvm") version "1.9.24"
+    id("org.jetbrains.kotlin.jvm") version "2.0.0"
     id("org.jetbrains.intellij") version "1.17.3"
-    id("org.jetbrains.grammarkit") version "2022.3.2"
+    id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 group = "dev.openfga.intellijplugin"
