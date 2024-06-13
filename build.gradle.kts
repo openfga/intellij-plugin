@@ -20,10 +20,7 @@ dependencies {
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.14.0")
-
-    // Until, https://github.com/openfga/language/pkg/java is published,
-    // the plugin cannot be built without manually building language and providing the jar file
-    implementation(files("libs/language-0.0.1.jar"))
+    implementation("dev.openfga:openfga-language:v0.2.0-beta.1")
 
     testImplementation("junit:junit:4.13.2")
 }
