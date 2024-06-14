@@ -8,7 +8,7 @@ import com.intellij.psi.PsiFile;
 import dev.openfga.language.errors.DslErrorsException;
 import dev.openfga.language.errors.ParsingError;
 import dev.openfga.language.errors.StartEnd;
-import dev.openfga.language.validation.DslValidator;
+import dev.openfga.language.validation.ModelValidator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +25,7 @@ public class OpenFGAAnnotator extends ExternalAnnotator<String, List<? extends P
     @Override
     public @Nullable List<? extends ParsingError> doAnnotate(@NotNull final String collectedInfo) {
         try {
-            DslValidator.validate(collectedInfo);
+            ModelValidator.validateDsl(collectedInfo);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (DslErrorsException e) {
