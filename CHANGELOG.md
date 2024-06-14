@@ -1,7 +1,13 @@
 
+## v0.1.2
+
+### [0.1.2](https://github.com/openfga/intellij-plugin/compare/v0.1.1...v0.1.2) (2024-06-13)
+
+* No functional changes
+
 ## v0.1.1
 
-### [0.1.1](https://github.com/openfga/vscode-ext/compare/v0.1.0...v0.1.1) (2024-05-31)
+### [0.1.1](https://github.com/openfga/intellij-plugin/compare/v0.1.0...v0.1.1) (2024-05-31)
 
 - feat: validation for OpenFGA model files
 - feat: validation for OpenFGA models in store files
