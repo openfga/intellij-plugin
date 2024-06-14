@@ -117,6 +117,6 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("JETBRAINS_API_TOKEN"))
+        token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
