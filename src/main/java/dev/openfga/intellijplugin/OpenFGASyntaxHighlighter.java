@@ -21,11 +21,11 @@ public class OpenFGASyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey RELATION_NAME =
             createTextAttributesKey("OPENFGA_RELATION_NAME", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
     public static final TextAttributesKey RELATION_REFERENCE =
-            createTextAttributesKey("OPENFGA_RELATION_REFERENCE", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
+            createTextAttributesKey("OPENFGA_RELATION_REFERENCE", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey TYPE_IDENTIFIER =
             createTextAttributesKey("OPENFGA_TYPE_IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
     public static final TextAttributesKey TYPE_REFERENCE =
-            createTextAttributesKey("OPENFGA_TYPE_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE);
+            createTextAttributesKey("OPENFGA_TYPE_REFERENCE", DefaultLanguageHighlighterColors.PARAMETER);
     public static final TextAttributesKey CONDITION_IDENTIFIER =
             createTextAttributesKey("OPENFGA_CONDITION_IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
     public static final TextAttributesKey CONDITION_REFERENCE =
