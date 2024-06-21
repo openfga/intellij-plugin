@@ -4,14 +4,17 @@ import dev.openfga.intellijplugin.servers.model.AuthenticationMethod;
 import dev.openfga.intellijplugin.servers.model.Oidc;
 import dev.openfga.intellijplugin.servers.model.Server;
 import dev.openfga.intellijplugin.servers.util.ServersUtil;
+import dev.openfga.intellijplugin.util.notifications.ToolWindowNotifier;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
-import com.intellij.openapi.ui.*;
+import com.intellij.openapi.ui.ComboBox;
+import com.intellij.openapi.ui.DialogPanel;
+import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.components.ActionLink;
 import com.intellij.ui.components.JBLabel;
@@ -23,14 +26,15 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
+import java.util.Optional;
 
 public class ServerDialog extends DialogWrapper {
     private static final Logger logger = Logger.getInstance(ServerDialog.class);
     private final ToolWindow toolWindow;
     private final Server server;
-
-    private DialogPanel dialogPanel;
     private final JBTextField nameField = new JBTextField();
     private final JBTextField urlField = new JBTextField();
     private final ComboBox<AuthenticationMethod> authenticationMethodField = new ComboBox<>(AuthenticationMethod.values());
@@ -42,21 +46,37 @@ public class ServerDialog extends DialogWrapper {
     private final ActionLink connectionTestButton = new ActionLink("Test connexion");
     private final JBLabel connectionTestLabel = new JBLabel();
 
-    protected ServerDialog(ToolWindow toolWindow) {
-        this(toolWindow, null);
-    }
+    private final ToolWindowNotifier notifier;
 
     public ServerDialog(ToolWindow toolWindow, @Nullable Server server) {
         super(true);
         this.toolWindow = toolWindow;
+        notifier = new ToolWindowNotifier(toolWindow);
         this.server = server != null ? server : new Server();
         setTitle(server != null ? "Edit Server" : "Add Server");
         init();
+        if (server == null) {
+            urlField.setText("http://localhost:8080");
+        }
+        urlField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                urlField.selectAll();
+            }
+        });
+    }
+
+    @Override
+    protected @Nullable ValidationInfo doValidate() {
+        if (nameField.getText().isBlank()) {
+            return new ValidationInfo("Name is required", nameField);
+        }
+        return null;
     }
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        dialogPanel = new DialogPanel(new MigLayout("fillx,wrap 2", "[left]rel[grow,fill]"));
+        DialogPanel dialogPanel = new DialogPanel(new MigLayout("fillx,wrap 2", "[left]rel[grow,fill]"));
 
         dialogPanel.add(new JBLabel("Name"));
         dialogPanel.add(nameField);
@@ -77,9 +97,9 @@ public class ServerDialog extends DialogWrapper {
 
         connectionTestButton.addActionListener(evt -> {
             var testServer = writeToModel(new Server());
-            connectionTestLabel.setText("testing connection with " + testServer.loadUrl());
+            connectionTestLabel.setText("testing connection with " + testServer.getUrl());
             connectionTestLabel.setIcon(new AnimatedIcon.Default());
-            ProgressManager.getInstance().run(new ServerDialog.ConnectionTestTask(testServer));
+            ProgressManager.getInstance().run(new dev.openfga.intellijplugin.servers.ui.ServerDialog.ConnectionTestTask(testServer));
         });
 
         loadModel();
@@ -145,10 +165,10 @@ public class ServerDialog extends DialogWrapper {
 
     private void loadModel() {
         nameField.setText(server.getName());
-        urlField.setText(server.loadUrl());
+        urlField.setText(server.getUrl());
         authenticationMethodField.setSelectedItem(server.getAuthenticationMethod());
-        apiTokenField.setText(server.loadApiToken());
-        var oidc = server.loadOidc();
+        apiTokenField.setText(server.getApiToken());
+        var oidc = server.getOidc();
         oidcClientIdField.setText(oidc.clientId());
         oidcClientSecretField.setText(oidc.clientSecret());
         oidcTokenEndpointField.setText(oidc.tokenEndpoint());
@@ -162,14 +182,14 @@ public class ServerDialog extends DialogWrapper {
 
     private Server writeToModel(Server server) {
         server.setName(nameField.getText());
-        server.storeUrl(urlField.getText());
+        server.setUrl(urlField.getText());
         var authenticationMethod = authenticationMethodField.getItem();
         server.setAuthenticationMethod(authenticationMethod);
         switch (authenticationMethod) {
             case NONE -> {
             }
-            case API_TOKEN -> server.storeApiToken(new String(apiTokenField.getPassword()));
-            case OIDC -> server.storeOidc(new Oidc(
+            case API_TOKEN -> server.setApiToken(new String(apiTokenField.getPassword()));
+            case OIDC -> server.setOidc(new Oidc(
                     oidcTokenEndpointField.getText(), oidcClientIdField.getText(),
                     new String(oidcClientSecretField.getPassword()),
                     oidcScopeField.getText()
@@ -178,14 +198,19 @@ public class ServerDialog extends DialogWrapper {
         return server;
     }
 
-    public static Server showAddServerDialog(ToolWindow toolWindow) {
-        var dialog = new ServerDialog(toolWindow);
-        return dialog.showAndGet() ? dialog.updateModel() : null;
+    public static Optional<Server> showAddServerDialog(ToolWindow toolWindow) {
+        return showDialog(toolWindow, null);
     }
 
-    public static Server showEditServerDialog(ToolWindow toolWindow, Server server) {
+    public static Optional<Server> showEditServerDialog(ToolWindow toolWindow, Server server) {
+        return showDialog(toolWindow, server);
+    }
+
+    private static Optional<Server> showDialog(ToolWindow toolWindow, Server server) {
         var dialog = new ServerDialog(toolWindow, server);
-        return dialog.showAndGet() ? dialog.updateModel() : null;
+        return dialog.showAndGet()
+                ? Optional.of(dialog.updateModel())
+                : Optional.empty();
     }
 
 
@@ -236,9 +261,7 @@ public class ServerDialog extends DialogWrapper {
             if (throwable != null) {
                 logger.warn(errorMessage, throwable);
             }
-            ToolWindowManager
-                    .getInstance(toolWindow.getProject())
-                    .notifyByBalloon(toolWindow.getId(), MessageType.ERROR, errorMessage);
+            notifier.notifyError(errorMessage);
         }
 
         private void taskSucceeded() {
@@ -247,7 +270,6 @@ public class ServerDialog extends DialogWrapper {
                 connectionTestLabel.setIcon(AllIcons.RunConfigurations.TestPassed);
             });
         }
-
     }
 }
 

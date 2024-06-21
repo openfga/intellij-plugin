@@ -1,4 +1,4 @@
-package dev.openfga.intellijplugin.servers.util;
+package dev.openfga.intellijplugin.util;
 
 import java.net.URI;
 
