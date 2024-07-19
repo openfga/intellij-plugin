@@ -1,8 +1,6 @@
 package dev.openfga.intellijplugin.cli;
 
 import com.intellij.openapi.progress.ProgressIndicator;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -10,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import org.jetbrains.annotations.NotNull;
 
 public class CliProcess {
 
@@ -32,7 +31,8 @@ public class CliProcess {
         this.timeout = timeout;
     }
 
-    public <T> Optional<T> start(@NotNull ProgressIndicator progressIndicator, CliProcessTask<T> task) throws CliTaskException {
+    public <T> Optional<T> start(@NotNull ProgressIndicator progressIndicator, CliProcessTask<T> task)
+            throws CliTaskException {
         var command = new ArrayList<String>();
         command.add(cli.binaryPath().toString());
         command.addAll(args);
@@ -46,7 +46,6 @@ public class CliProcess {
             var prefix = getClass().getName();
             outputFile = File.createTempFile(prefix, ".txt");
             errorFile = File.createTempFile(prefix, ".log");
-
 
             processBuilder.redirectError(errorFile);
             processBuilder.redirectOutput(outputFile);
@@ -89,5 +88,4 @@ public class CliProcess {
             // left intentionally blank
         }
     }
-
 }

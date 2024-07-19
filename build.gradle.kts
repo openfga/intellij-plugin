@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("jacoco")
+    id("com.diffplug.spotless") version "6.25.0"
     id("org.jetbrains.kotlin.jvm") version "1.9.24"
     id("org.jetbrains.intellij") version "1.17.3"
     id("org.jetbrains.grammarkit") version "2022.3.2"
@@ -22,6 +23,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.14.0")
     implementation("dev.openfga:openfga-language:v0.2.0-beta.1")
 
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:6.25.0")
+
     testImplementation("junit:junit:4.13.2")
 }
 
@@ -41,6 +44,15 @@ grammarKit {
     jflexRelease.set("1.7.0-1")
     grammarKitRelease.set("2021.1.2")
     intellijRelease.set("203.7717.81")
+}
+
+spotless {
+    java {
+        target("src/main/java/dev/openfga/intellijplugin/**/*.java")
+        palantirJavaFormat()
+        removeUnusedImports()
+        importOrder()
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
@@ -120,3 +132,4 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+

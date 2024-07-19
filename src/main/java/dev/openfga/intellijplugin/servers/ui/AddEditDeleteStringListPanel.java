@@ -3,11 +3,10 @@ package dev.openfga.intellijplugin.servers.ui;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.NonEmptyInputValidator;
 import com.intellij.ui.AddEditDeleteListPanel;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class AddEditDeleteStringListPanel extends AddEditDeleteListPanel<String> {
 
@@ -20,7 +19,8 @@ public class AddEditDeleteStringListPanel extends AddEditDeleteListPanel<String>
 
     @Override
     protected @Nullable String editSelectedItem(String item) {
-        var intput = Messages.showInputDialog(this, inputDialogMessage, "Edit", null, item, new NonEmptyInputValidator());
+        var intput =
+                Messages.showInputDialog(this, inputDialogMessage, "Edit", null, item, new NonEmptyInputValidator());
         return intput != null ? intput : item;
     }
 

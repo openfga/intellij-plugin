@@ -1,15 +1,15 @@
 package dev.openfga.intellijplugin;
 
-import dev.openfga.intellijplugin.parsing.OpenFGATokenSets;
-import dev.openfga.intellijplugin.psi.OpenFGATypes;
+import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
+
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
+import dev.openfga.intellijplugin.parsing.OpenFGATokenSets;
+import dev.openfga.intellijplugin.psi.OpenFGATypes;
 import org.jetbrains.annotations.NotNull;
-
-import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class OpenFGASyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey KEYWORD =
@@ -30,25 +30,26 @@ public class OpenFGASyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("OPENFGA_CONDITION_IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
     public static final TextAttributesKey CONDITION_REFERENCE =
             createTextAttributesKey("OPENFGA_CONDITION_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE);
-    public static final TextAttributesKey CONDITION_PARAM_IDENTIFIER =
-            createTextAttributesKey("OPENFGA_CONDITION_PARAM_IDENTIFIER", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
+    public static final TextAttributesKey CONDITION_PARAM_IDENTIFIER = createTextAttributesKey(
+            "OPENFGA_CONDITION_PARAM_IDENTIFIER", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
     public static final TextAttributesKey CONDITION_PARAM_TYPE =
             createTextAttributesKey("OPENFGA_CONDITION_PARAM_TYPE", DefaultLanguageHighlighterColors.PARAMETER);
     public static final TextAttributesKey COMMENT =
             createTextAttributesKey("OPENFGA_COMMENTS", DefaultLanguageHighlighterColors.LINE_COMMENT);
 
-    private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
-    private static final TextAttributesKey[] MODULE_NAME_KEY = new TextAttributesKey[]{MODULE_NAME};
-    private static final TextAttributesKey[] SCHEMA_VERSIONS_KEYS = new TextAttributesKey[]{SCHEMA_VERSIONS};
-    private static final TextAttributesKey[] RELATION_NAME_KEYS = new TextAttributesKey[]{RELATION_NAME};
-    private static final TextAttributesKey[] RELATION_REFERENCE_KEYS = new TextAttributesKey[]{RELATION_REFERENCE};
-    private static final TextAttributesKey[] TYPE_IDENTIFIER_KEYS = new TextAttributesKey[]{TYPE_IDENTIFIER};
-    private static final TextAttributesKey[] TYPE_REFERENCE_KEYS = new TextAttributesKey[]{TYPE_REFERENCE};
-    private static final TextAttributesKey[] CONDITION_IDENTIFIER_KEYS = new TextAttributesKey[]{CONDITION_IDENTIFIER};
-    private static final TextAttributesKey[] CONDITION_REFERENCE_KEYS = new TextAttributesKey[]{CONDITION_REFERENCE};
-    private static final TextAttributesKey[] CONDITION_PARAM_KEYS = new TextAttributesKey[]{CONDITION_PARAM_IDENTIFIER};
-    private static final TextAttributesKey[] CONDITION_PARAM_TYPES = new TextAttributesKey[]{CONDITION_PARAM_TYPE};
-    private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
+    private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[] {KEYWORD};
+    private static final TextAttributesKey[] MODULE_NAME_KEY = new TextAttributesKey[] {MODULE_NAME};
+    private static final TextAttributesKey[] SCHEMA_VERSIONS_KEYS = new TextAttributesKey[] {SCHEMA_VERSIONS};
+    private static final TextAttributesKey[] RELATION_NAME_KEYS = new TextAttributesKey[] {RELATION_NAME};
+    private static final TextAttributesKey[] RELATION_REFERENCE_KEYS = new TextAttributesKey[] {RELATION_REFERENCE};
+    private static final TextAttributesKey[] TYPE_IDENTIFIER_KEYS = new TextAttributesKey[] {TYPE_IDENTIFIER};
+    private static final TextAttributesKey[] TYPE_REFERENCE_KEYS = new TextAttributesKey[] {TYPE_REFERENCE};
+    private static final TextAttributesKey[] CONDITION_IDENTIFIER_KEYS = new TextAttributesKey[] {CONDITION_IDENTIFIER};
+    private static final TextAttributesKey[] CONDITION_REFERENCE_KEYS = new TextAttributesKey[] {CONDITION_REFERENCE};
+    private static final TextAttributesKey[] CONDITION_PARAM_KEYS =
+            new TextAttributesKey[] {CONDITION_PARAM_IDENTIFIER};
+    private static final TextAttributesKey[] CONDITION_PARAM_TYPES = new TextAttributesKey[] {CONDITION_PARAM_TYPE};
+    private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[] {COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull
@@ -110,5 +111,4 @@ public class OpenFGASyntaxHighlighter extends SyntaxHighlighterBase {
 
         return EMPTY_KEYS;
     }
-
 }

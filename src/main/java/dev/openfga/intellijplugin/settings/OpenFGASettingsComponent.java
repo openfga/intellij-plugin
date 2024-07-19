@@ -1,8 +1,5 @@
 package dev.openfga.intellijplugin.settings;
 
-import dev.openfga.intellijplugin.cli.CliTaskException;
-import dev.openfga.intellijplugin.cli.Cli;
-import dev.openfga.intellijplugin.cli.tasks.ReadCliVersionTask;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
@@ -14,10 +11,9 @@ import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.util.ui.FormBuilder;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
+import dev.openfga.intellijplugin.cli.Cli;
+import dev.openfga.intellijplugin.cli.CliTaskException;
+import dev.openfga.intellijplugin.cli.tasks.ReadCliVersionTask;
 import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class OpenFGASettingsComponent {
     private static final Logger logger = Logger.getInstance(OpenFGASettingsComponent.class);
@@ -47,9 +46,11 @@ public class OpenFGASettingsComponent {
                 .getPanel();
         clearCliPathField.addActionListener(evt -> cliPathField.setText(""));
         cliPathField.setEditable(false);
-        cliPathField.addBrowseFolderListener("Select", "Select OpenFGA cli path", null, new FileChooserDescriptor(
-                true, false, false, false, false, false
-        ));
+        cliPathField.addBrowseFolderListener(
+                "Select",
+                "Select OpenFGA cli path",
+                null,
+                new FileChooserDescriptor(true, false, false, false, false, false));
 
         installValidator(cliPathField, this::validateCliPath);
         cliPathField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
@@ -91,14 +92,14 @@ public class OpenFGASettingsComponent {
             cliVersionLabel.setText("Detected version: " + version);
         } else {
             cliVersionLabel.setIcon(AllIcons.General.Warning);
-            cliVersionLabel.setText("Could not detect cli version, make sure it actually is a valid OpenFGA cli binary");
+            cliVersionLabel.setText(
+                    "Could not detect cli version, make sure it actually is a valid OpenFGA cli binary");
         }
     }
 
     private <T extends JComponent & Disposable> void installValidator(T component, Supplier<ValidationInfo> validator) {
-        var componentValidator = new ComponentValidator(component)
-                .withValidator(validator)
-                .installOn(component);
+        var componentValidator =
+                new ComponentValidator(component).withValidator(validator).installOn(component);
         validators.add(componentValidator);
     }
 
@@ -139,8 +140,6 @@ public class OpenFGASettingsComponent {
     }
 
     public boolean isValid() {
-        return validators.stream()
-                .map(ComponentValidator::getValidationInfo)
-                .allMatch(Objects::isNull);
+        return validators.stream().map(ComponentValidator::getValidationInfo).allMatch(Objects::isNull);
     }
 }

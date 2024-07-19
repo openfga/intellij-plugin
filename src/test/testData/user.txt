@@ -1,4 +1,4 @@
-OpenFGA File
+OpenFGA Model File
   OpenFGAMainImpl(MAIN)
     OpenFGAModelHeaderImpl(MODEL_HEADER)
       PsiElement(OpenFGA.MODEL)('model')

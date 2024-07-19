@@ -31,11 +31,18 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
-                name="OpenFGA File"
+                name="OpenFGA Model File"
                 implementationClass="dev.openfga.intellijplugin.OpenFGAFileType"
                 fieldName="INSTANCE"
                 language="OpenFGA"
                 extensions="fga;openfga"/>
+
+        <fileType
+                name="OpenFGA Store File"
+                implementationClass="dev.openfga.intellijplugin.OpenFGAStoreFileType"
+                fieldName="INSTANCE"
+                language="yaml"
+                patterns="*.fga.yaml;*.openfga.yaml"/>
 
         <lang.commenter
                 language="OpenFGA"

@@ -1,7 +1,6 @@
 package dev.openfga.intellijplugin.servers.ui;
 
 import dev.openfga.intellijplugin.servers.model.Server;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 class ServerTreeNode extends DefaultMutableTreeNode {

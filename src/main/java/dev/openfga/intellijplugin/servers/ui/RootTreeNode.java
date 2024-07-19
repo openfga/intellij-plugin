@@ -1,11 +1,10 @@
 package dev.openfga.intellijplugin.servers.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
 import dev.openfga.intellijplugin.servers.model.Server;
 import dev.openfga.intellijplugin.servers.service.OpenFGAServers;
-import com.intellij.openapi.application.ApplicationManager;
-
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.List;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 class RootTreeNode extends DefaultMutableTreeNode {
 
@@ -15,7 +14,9 @@ class RootTreeNode extends DefaultMutableTreeNode {
     }
 
     private List<Server> getServers() {
-        return ApplicationManager.getApplication().getService(OpenFGAServers.class).getServers();
+        return ApplicationManager.getApplication()
+                .getService(OpenFGAServers.class)
+                .getServers();
     }
 
     void reload() {

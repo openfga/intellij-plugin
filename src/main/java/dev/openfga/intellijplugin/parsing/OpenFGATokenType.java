@@ -1,7 +1,7 @@
 package dev.openfga.intellijplugin.parsing;
 
-import dev.openfga.intellijplugin.OpenFGALanguage;
 import com.intellij.psi.tree.IElementType;
+import dev.openfga.intellijplugin.OpenFGALanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,5 +15,4 @@ public class OpenFGATokenType extends IElementType {
     public String toString() {
         return "OpenFGA." + super.toString();
     }
-
 }

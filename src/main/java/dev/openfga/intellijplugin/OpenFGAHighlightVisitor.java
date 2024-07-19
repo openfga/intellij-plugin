@@ -54,14 +54,17 @@ public class OpenFGAHighlightVisitor implements HighlightVisitor {
 
         for (var attributesKey : attributesKeys) {
             builder = builder.textAttributes(attributesKey);
-
         }
 
         return builder.range(element).create();
     }
 
     @Override
-    public boolean analyze(@NotNull PsiFile file, boolean updateWholeFile, @NotNull HighlightInfoHolder holder, @NotNull Runnable action) {
+    public boolean analyze(
+            @NotNull PsiFile file,
+            boolean updateWholeFile,
+            @NotNull HighlightInfoHolder holder,
+            @NotNull Runnable action) {
         myHolder = holder;
         openfgaHighlighter = new OpenFGASyntaxHighlighter();
         try {
@@ -72,5 +75,4 @@ public class OpenFGAHighlightVisitor implements HighlightVisitor {
         }
         return true;
     }
-
 }

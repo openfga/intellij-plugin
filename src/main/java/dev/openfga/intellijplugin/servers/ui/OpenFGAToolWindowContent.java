@@ -1,18 +1,17 @@
 package dev.openfga.intellijplugin.servers.ui;
 
-import dev.openfga.intellijplugin.servers.service.OpenFGAServers;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.treeStructure.Tree;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import dev.openfga.intellijplugin.servers.service.OpenFGAServers;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Optional;
+import javax.swing.*;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import org.jetbrains.annotations.NotNull;
 
 class OpenFGAToolWindowContent {
     private final ToolWindow toolWindow;
@@ -31,7 +30,6 @@ class OpenFGAToolWindowContent {
 
         var toolbarDecorator = ToolbarDecorator.createDecorator(tree);
 
-
         toolbarDecorator.setAddAction(anActionButton -> {
             var server = ServerDialog.showAddServerDialog(toolWindow);
             if (server == null) {
@@ -45,14 +43,12 @@ class OpenFGAToolWindowContent {
             tree.setSelectionPath(treePath);
             tree.scrollPathToVisible(treePath);
             tree.updateUI();
-
         });
         toolbarDecorator.setEditActionUpdater(updater -> getSelectedNode().isPresent());
-        toolbarDecorator.setEditAction(anActionButton -> getSelectedNode()
-                .ifPresent(node -> {
-                    ServerDialog.showEditServerDialog(toolWindow, node.getServer());
-                    tree.updateUI();
-                }));
+        toolbarDecorator.setEditAction(anActionButton -> getSelectedNode().ifPresent(node -> {
+            ServerDialog.showEditServerDialog(toolWindow, node.getServer());
+            tree.updateUI();
+        }));
         toolbarDecorator.setRemoveActionUpdater(updater -> getSelectedNode().isPresent());
         toolbarDecorator.setRemoveAction(anActionButton -> {
             var selectedNode = getSelectedNode();
@@ -60,7 +56,8 @@ class OpenFGAToolWindowContent {
                 var server = node.getServer();
 
                 var title = "Confirm OpenFGA Server Deletion";
-                var message = "Deleting the OpenFGA server '" + server.getName() + "' is not reversible. Do you confirm the server deletion?";
+                var message = "Deleting the OpenFGA server '" + server.getName()
+                        + "' is not reversible. Do you confirm the server deletion?";
                 Messages.showYesNoDialog(mainPanel, message, title, null);
 
                 servers().remove(server);
@@ -115,6 +112,4 @@ class OpenFGAToolWindowContent {
     private ServerTreeNode[] getSelectedNodes() {
         return tree.getSelectedNodes(ServerTreeNode.class, null);
     }
-
-
 }

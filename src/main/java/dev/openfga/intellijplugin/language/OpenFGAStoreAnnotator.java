@@ -11,15 +11,14 @@ import dev.openfga.language.errors.DslErrorsException;
 import dev.openfga.language.errors.ParsingError;
 import dev.openfga.language.errors.StartEnd;
 import dev.openfga.language.validation.ModelValidator;
+import java.io.IOException;
+import java.util.List;
 import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.yaml.YAMLUtil;
 import org.jetbrains.yaml.psi.YAMLFile;
 import org.jetbrains.yaml.psi.impl.YAMLScalarListImpl;
-
-import java.io.IOException;
-import java.util.List;
 
 public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? extends ParsingError>> {
 
@@ -36,7 +35,7 @@ public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? exte
         // This skews all the original line numbers, so we instead get the unmodified value
         if (ObjectUtils.isNotEmpty(modelField) && ObjectUtils.isNotEmpty(modelField.getFirst())) {
             // Remove first line which is the scalar notation ('|', '|-', '|+')
-           return modelField.getFirst().getText().split("\n", 2)[1];
+            return modelField.getFirst().getText().split("\n", 2)[1];
         }
 
         return null;
@@ -63,9 +62,10 @@ public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? exte
     // The model is the clean string, whereas the originalString is that from the YAML with extra whitespace
     // First the clean string is validated, then the original string is used to determine correct offsets
     @Override
-    public void apply(@NotNull final PsiFile file,
-                      final List<? extends ParsingError> annotationResult,
-                      @NotNull final AnnotationHolder holder) {
+    public void apply(
+            @NotNull final PsiFile file,
+            final List<? extends ParsingError> annotationResult,
+            @NotNull final AnnotationHolder holder) {
         final @Nullable Pair<PsiElement, String> fileContents = getModelField(file);
 
         if (ObjectUtils.isEmpty(fileContents)) {
@@ -82,10 +82,9 @@ public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? exte
             final StartEnd startEndLine = error.getLine();
             final StartEnd startEndColumn = error.getColumn();
 
-            int offsetStart = getOffsetFromRange(
-                    originalString, startEndLine.getStart(), startEndColumn.getStart(), offset);
-            int offsetEnd = getOffsetFromRange(
-                    originalString, startEndLine.getEnd(), startEndColumn.getEnd(), offset);
+            int offsetStart =
+                    getOffsetFromRange(originalString, startEndLine.getStart(), startEndColumn.getStart(), offset);
+            int offsetEnd = getOffsetFromRange(originalString, startEndLine.getEnd(), startEndColumn.getEnd(), offset);
 
             holder.newAnnotation(HighlightSeverity.ERROR, error.getMessage())
                     .range(new TextRange(offsetStart, offsetEnd))
@@ -93,8 +92,7 @@ public class OpenFGAStoreAnnotator extends ExternalAnnotator<String, List<? exte
         }
     }
 
-    private static int getOffsetFromRange(
-            @NotNull final String doc, int line, int character, int offset) {
+    private static int getOffsetFromRange(@NotNull final String doc, int line, int character, int offset) {
         final String[] lines = doc.split("\n");
 
         // Count offset

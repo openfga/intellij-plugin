@@ -1,11 +1,10 @@
 package dev.openfga.intellijplugin.settings;
 
 import com.intellij.openapi.options.Configurable;
+import java.util.Objects;
+import javax.swing.*;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.util.Objects;
 
 public class OpenFGASettingsConfigurable implements Configurable {
 
@@ -55,5 +54,4 @@ public class OpenFGASettingsConfigurable implements Configurable {
     public void disposeUIResources() {
         openFGASettingsComponent = null;
     }
-
 }

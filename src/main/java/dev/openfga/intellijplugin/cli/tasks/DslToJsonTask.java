@@ -1,10 +1,5 @@
 package dev.openfga.intellijplugin.cli.tasks;
 
-import dev.openfga.intellijplugin.Notifier;
-import dev.openfga.intellijplugin.cli.CliProcess;
-import dev.openfga.intellijplugin.cli.CliProcessTask;
-import dev.openfga.intellijplugin.cli.CliTaskException;
-import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
 import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
@@ -17,8 +12,11 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import org.jetbrains.annotations.NotNull;
-
+import dev.openfga.intellijplugin.Notifier;
+import dev.openfga.intellijplugin.cli.CliProcess;
+import dev.openfga.intellijplugin.cli.CliProcessTask;
+import dev.openfga.intellijplugin.cli.CliTaskException;
+import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask<Void> {
 
@@ -55,14 +54,7 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
 
         process = new CliProcess(
                 OpenFGASettingsState.getInstance().requireCli(),
-                List.of(
-                        "model",
-                        "transform",
-                        "--file",
-                        dslFilePath.toString(),
-                        "--input-format",
-                        "fga"
-                ));
+                List.of("model", "transform", "--file", dslFilePath.toString(), "--input-format", "fga"));
     }
 
     public static String computeJsonGeneratedFileName(PsiFile dslFile) {
@@ -86,9 +78,8 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
     @Override
     public Void onSuccess(File stdOutFile, File stdErrFile) throws IOException, CliTaskException {
         Files.copy(stdOutFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-        ApplicationManager.getApplication().invokeLater(
-                () -> show(new GeneratedFile(dslFile.getProject(), targetPath)),
-                ModalityState.NON_MODAL);
+        ApplicationManager.getApplication()
+                .invokeLater(() -> show(new GeneratedFile(dslFile.getProject(), targetPath)), ModalityState.NON_MODAL);
         return null;
     }
 
@@ -109,7 +100,6 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
     private void show(GeneratedFile generatedFile) {
         generatedFile.refreshInTreeView();
         generatedFile.openInEditor();
-
     }
 
     private static final class GeneratedFile {

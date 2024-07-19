@@ -2,9 +2,8 @@ package dev.openfga.intellijplugin;
 
 import com.intellij.ide.fileTemplates.DefaultTemplatePropertiesProvider;
 import com.intellij.psi.PsiDirectory;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Properties;
+import org.jetbrains.annotations.NotNull;
 
 public class OpenFGADefaultTemplatePropertiesProvider implements DefaultTemplatePropertiesProvider {
     @Override
