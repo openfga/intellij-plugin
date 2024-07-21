@@ -2,9 +2,9 @@ plugins {
     id("java")
     id("jacoco")
     id("com.diffplug.spotless") version "6.25.0"
-    id("org.jetbrains.kotlin.jvm") version "1.9.24"
-    id("org.jetbrains.intellij") version "1.17.3"
-    id("org.jetbrains.grammarkit") version "2022.3.2"
+    id("org.jetbrains.kotlin.jvm") version "2.0.0"
+    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 group = "dev.openfga.intellijplugin"
@@ -17,10 +17,10 @@ repositories {
 
 dependencies {
     implementation("org.antlr:antlr4:4.13.1")
-    implementation("dev.openfga:openfga-sdk:0.4.2")
+    implementation("dev.openfga:openfga-sdk:0.5.0")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
-    implementation("org.apache.commons:commons-lang3:3.14.0")
+    implementation("org.apache.commons:commons-lang3:3.15.0")
     implementation("dev.openfga:openfga-language:v0.2.0-beta.1")
 
     implementation("com.diffplug.spotless:spotless-plugin-gradle:6.25.0")
