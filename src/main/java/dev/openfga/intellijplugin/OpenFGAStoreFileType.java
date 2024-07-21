@@ -4,31 +4,32 @@ import com.intellij.openapi.fileTypes.LanguageFileType;
 import javax.swing.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.yaml.YAMLLanguage;
 
-public class OpenFGAFileType extends LanguageFileType {
+public class OpenFGAStoreFileType extends LanguageFileType {
 
-    public static final OpenFGAFileType INSTANCE = new OpenFGAFileType();
+    public static final OpenFGAStoreFileType INSTANCE = new OpenFGAStoreFileType();
 
-    private OpenFGAFileType() {
-        super(OpenFGALanguage.INSTANCE);
+    private OpenFGAStoreFileType() {
+        super(YAMLLanguage.INSTANCE);
     }
 
     @NotNull
     @Override
     public String getName() {
-        return "OpenFGA Model File";
+        return "OpenFGA Store File";
     }
 
     @NotNull
     @Override
     public String getDescription() {
-        return "OpenFGA Model file";
+        return "OpenFGA Store file";
     }
 
     @NotNull
     @Override
     public String getDefaultExtension() {
-        return "fga";
+        return "fga.yaml";
     }
 
     @Nullable

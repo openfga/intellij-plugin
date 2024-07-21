@@ -1,13 +1,13 @@
 package dev.openfga.intellijplugin.actions;
 
-import dev.openfga.intellijplugin.cli.tasks.DslToJsonTask;
-import dev.openfga.intellijplugin.OpenFGALanguage;
-import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.progress.ProgressManager;
+import dev.openfga.intellijplugin.OpenFGALanguage;
+import dev.openfga.intellijplugin.cli.tasks.DslToJsonTask;
+import dev.openfga.intellijplugin.settings.OpenFGASettingsState;
 import org.jetbrains.annotations.NotNull;
 
 public class DslToJsonAction extends AnAction {
@@ -41,8 +41,7 @@ public class DslToJsonAction extends AnAction {
         if (virtualFile == null) {
             return;
         }
-        DslToJsonTask.create(dslFile, virtualFile.toNioPath())
-                .ifPresent(ProgressManager.getInstance()::run);
+        DslToJsonTask.create(dslFile, virtualFile.toNioPath()).ifPresent(ProgressManager.getInstance()::run);
     }
 
     @Override

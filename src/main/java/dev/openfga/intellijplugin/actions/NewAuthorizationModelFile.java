@@ -1,6 +1,5 @@
 package dev.openfga.intellijplugin.actions;
 
-import dev.openfga.intellijplugin.OpenFGAIcons;
 import com.intellij.ide.actions.CreateFileFromTemplateAction;
 import com.intellij.ide.actions.CreateFileFromTemplateDialog;
 import com.intellij.ide.fileTemplates.FileTemplate;
@@ -9,6 +8,7 @@ import com.intellij.ide.fileTemplates.ui.CreateFromTemplateDialog;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
+import dev.openfga.intellijplugin.OpenFGAIcons;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,21 +18,24 @@ public class NewAuthorizationModelFile extends CreateFileFromTemplateAction {
     }
 
     @Override
-    protected String getActionName(PsiDirectory directory, @NonNls @NotNull String newName, @NonNls String templateName) {
+    protected String getActionName(
+            PsiDirectory directory, @NonNls @NotNull String newName, @NonNls String templateName) {
         return "Authorization Model File";
     }
 
     @Override
-    protected void buildDialog(@NotNull Project project, @NotNull PsiDirectory directory, CreateFileFromTemplateDialog.@NotNull Builder builder) {
-        builder
-                .setTitle("Authorization Model File")
-                .addKind("File", OpenFGAIcons.FILE, "OpenFGA Authorization Model");
+    protected void buildDialog(
+            @NotNull Project project,
+            @NotNull PsiDirectory directory,
+            CreateFileFromTemplateDialog.@NotNull Builder builder) {
+        builder.setTitle("Authorization Model File").addKind("File", OpenFGAIcons.FILE, "OpenFGA Authorization Model");
     }
 
     @Override
     protected PsiFile createFileFromTemplate(String name, FileTemplate template, PsiDirectory dir) {
         var project = dir.getProject();
-        return new CreateFromTemplateDialog(project, dir, template, new AttributesDefaults(name).withFixedName(true), null)
+        return new CreateFromTemplateDialog(
+                        project, dir, template, new AttributesDefaults(name).withFixedName(true), null)
                 .create()
                 .getContainingFile();
     }

@@ -34,5 +34,4 @@ public class OpenFGACommenter implements Commenter {
     public String getCommentedBlockCommentSuffix() {
         return null;
     }
-
 }

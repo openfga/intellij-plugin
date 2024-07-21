@@ -13,5 +13,4 @@ public class OpenFGASyntaxHighlighterFactory extends SyntaxHighlighterFactory {
     public SyntaxHighlighter getSyntaxHighlighter(Project project, VirtualFile virtualFile) {
         return new OpenFGASyntaxHighlighter();
     }
-
 }

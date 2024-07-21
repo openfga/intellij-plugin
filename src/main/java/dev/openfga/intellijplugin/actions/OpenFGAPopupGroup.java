@@ -1,10 +1,10 @@
 package dev.openfga.intellijplugin.actions;
 
-import dev.openfga.intellijplugin.OpenFGALanguage;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import dev.openfga.intellijplugin.OpenFGALanguage;
 import org.jetbrains.annotations.NotNull;
 
 public class OpenFGAPopupGroup extends DefaultActionGroup {

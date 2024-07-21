@@ -1,7 +1,7 @@
 package dev.openfga.intellijplugin.parsing;
 
-import dev.openfga.intellijplugin.OpenFGALanguage;
 import com.intellij.psi.tree.IElementType;
+import dev.openfga.intellijplugin.OpenFGALanguage;
 import org.jetbrains.annotations.NonNls;
 
 public class OpenFGAElementType extends IElementType {

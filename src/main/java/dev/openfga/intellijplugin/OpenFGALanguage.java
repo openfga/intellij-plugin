@@ -9,5 +9,4 @@ public class OpenFGALanguage extends Language {
     private OpenFGALanguage() {
         super("OpenFGA");
     }
-
 }

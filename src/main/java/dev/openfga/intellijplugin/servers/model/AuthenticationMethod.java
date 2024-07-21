@@ -3,7 +3,8 @@ package dev.openfga.intellijplugin.servers.model;
 public enum AuthenticationMethod {
     NONE,
     API_TOKEN,
-    OIDC;;
+    OIDC;
+    ;
 
     @Override
     public String toString() {

@@ -1,9 +1,5 @@
 package dev.openfga.intellijplugin.servers.ui;
 
-import dev.openfga.intellijplugin.servers.model.AuthenticationMethod;
-import dev.openfga.intellijplugin.servers.model.Oidc;
-import dev.openfga.intellijplugin.servers.model.Server;
-import dev.openfga.intellijplugin.servers.util.ServersUtil;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -17,13 +13,16 @@ import com.intellij.ui.components.ActionLink;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBTextField;
+import dev.openfga.intellijplugin.servers.model.AuthenticationMethod;
+import dev.openfga.intellijplugin.servers.model.Oidc;
+import dev.openfga.intellijplugin.servers.model.Server;
+import dev.openfga.intellijplugin.servers.util.ServersUtil;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ItemEvent;
 
 public class ServerDialog extends DialogWrapper {
     private static final Logger logger = Logger.getInstance(ServerDialog.class);
@@ -33,7 +32,8 @@ public class ServerDialog extends DialogWrapper {
     private DialogPanel dialogPanel;
     private final JBTextField nameField = new JBTextField();
     private final JBTextField urlField = new JBTextField();
-    private final ComboBox<AuthenticationMethod> authenticationMethodField = new ComboBox<>(AuthenticationMethod.values());
+    private final ComboBox<AuthenticationMethod> authenticationMethodField =
+            new ComboBox<>(AuthenticationMethod.values());
     private final JBPasswordField apiTokenField = new JBPasswordField();
     private final JBTextField oidcClientIdField = new JBTextField();
     private final JBPasswordField oidcClientSecretField = new JBPasswordField();
@@ -97,11 +97,12 @@ public class ServerDialog extends DialogWrapper {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            var newInnerPanel = switch ((AuthenticationMethod) e.getItem()) {
-                case NONE -> noAuthPanel;
-                case API_TOKEN -> apiTokenPanel;
-                case OIDC -> oidcPanel;
-            };
+            var newInnerPanel =
+                    switch ((AuthenticationMethod) e.getItem()) {
+                        case NONE -> noAuthPanel;
+                        case API_TOKEN -> apiTokenPanel;
+                        case OIDC -> oidcPanel;
+                    };
             SwingUtilities.invokeLater(() -> {
                 authPanel.removeAll();
                 authPanel.add(newInnerPanel, BorderLayout.CENTER);
@@ -153,7 +154,6 @@ public class ServerDialog extends DialogWrapper {
         oidcClientSecretField.setText(oidc.clientSecret());
         oidcTokenEndpointField.setText(oidc.tokenEndpoint());
         oidcScopeField.setText(oidc.scope());
-
     }
 
     private Server updateModel() {
@@ -166,14 +166,13 @@ public class ServerDialog extends DialogWrapper {
         var authenticationMethod = authenticationMethodField.getItem();
         server.setAuthenticationMethod(authenticationMethod);
         switch (authenticationMethod) {
-            case NONE -> {
-            }
+            case NONE -> {}
             case API_TOKEN -> server.storeApiToken(new String(apiTokenField.getPassword()));
             case OIDC -> server.storeOidc(new Oidc(
-                    oidcTokenEndpointField.getText(), oidcClientIdField.getText(),
+                    oidcTokenEndpointField.getText(),
+                    oidcClientIdField.getText(),
                     new String(oidcClientSecretField.getPassword()),
-                    oidcScopeField.getText()
-            ));
+                    oidcScopeField.getText()));
         }
         return server;
     }
@@ -187,7 +186,6 @@ public class ServerDialog extends DialogWrapper {
         var dialog = new ServerDialog(toolWindow, server);
         return dialog.showAndGet() ? dialog.updateModel() : null;
     }
-
 
     private class ConnectionTestTask extends Task.Backgroundable {
         private final Server testServer;
@@ -225,9 +223,11 @@ public class ServerDialog extends DialogWrapper {
         private void taskFailed(String errorMessage) {
             taskFailed(errorMessage, null);
         }
+
         private void taskFailed(Throwable throwable) {
             taskFailed(String.format("%s: %s", throwable.getClass().getName(), throwable.getMessage()), throwable);
         }
+
         private void taskFailed(String errorMessage, Throwable throwable) {
             SwingUtilities.invokeLater(() -> {
                 connectionTestLabel.setText(testServer + " connection failed");
@@ -236,8 +236,7 @@ public class ServerDialog extends DialogWrapper {
             if (throwable != null) {
                 logger.warn(errorMessage, throwable);
             }
-            ToolWindowManager
-                    .getInstance(toolWindow.getProject())
+            ToolWindowManager.getInstance(toolWindow.getProject())
                     .notifyByBalloon(toolWindow.getId(), MessageType.ERROR, errorMessage);
         }
 
@@ -247,7 +246,5 @@ public class ServerDialog extends DialogWrapper {
                 connectionTestLabel.setIcon(AllIcons.RunConfigurations.TestPassed);
             });
         }
-
     }
 }
-

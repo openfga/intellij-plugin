@@ -16,6 +16,7 @@ public class Notifier {
                 .createNotification(content, NotificationType.ERROR)
                 .notify(project);
     }
+
     public static void notifyError(String title, String content) {
         notifyError(null, title, content);
     }

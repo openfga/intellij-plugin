@@ -9,11 +9,10 @@ import dev.openfga.language.errors.DslErrorsException;
 import dev.openfga.language.errors.ParsingError;
 import dev.openfga.language.errors.StartEnd;
 import dev.openfga.language.validation.ModelValidator;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.IOException;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class OpenFGAAnnotator extends ExternalAnnotator<String, List<? extends ParsingError>> {
 
@@ -36,9 +35,10 @@ public class OpenFGAAnnotator extends ExternalAnnotator<String, List<? extends P
     }
 
     @Override
-    public void apply(@NotNull final PsiFile file,
-                      final List<? extends ParsingError> annotationResult,
-                      @NotNull final AnnotationHolder holder) {
+    public void apply(
+            @NotNull final PsiFile file,
+            final List<? extends ParsingError> annotationResult,
+            @NotNull final AnnotationHolder holder) {
 
         final String fileContents = file.getText();
 

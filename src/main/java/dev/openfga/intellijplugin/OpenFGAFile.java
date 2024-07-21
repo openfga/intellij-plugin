@@ -21,5 +21,4 @@ public class OpenFGAFile extends PsiFileBase {
     public String toString() {
         return getFileType().getName();
     }
-
 }

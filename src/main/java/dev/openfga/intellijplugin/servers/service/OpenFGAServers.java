@@ -1,23 +1,19 @@
 package dev.openfga.intellijplugin.servers.service;
 
-import dev.openfga.intellijplugin.servers.model.Server;
-import dev.openfga.intellijplugin.servers.model.ServersState;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
+import dev.openfga.intellijplugin.servers.model.Server;
+import dev.openfga.intellijplugin.servers.model.ServersState;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Service(Service.Level.APP)
 @State(
         name = "OpenFGAServers.State",
-        storages = {
-                @Storage(value = "openfga-servers.xml", roamingType = RoamingType.DISABLED)
-        }
-)
+        storages = {@Storage(value = "openfga-servers.xml", roamingType = RoamingType.DISABLED)})
 public final class OpenFGAServers implements PersistentStateComponent<ServersState> {
 
     private ServersState state = new ServersState();
