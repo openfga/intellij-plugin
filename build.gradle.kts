@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("java")
     id("jacoco")
@@ -56,9 +58,7 @@ spotless {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    compilerOptions.jvmTarget = JvmTarget.JVM_17
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -76,14 +76,13 @@ tasks {
 
     generateLexer {
         sourceFile.set(file("src/main/java/dev/openfga/intellijplugin/parsing/OpenFGALexer.flex"))
-        targetDir.set("src/generated/java/dev/openfga/intellijplugin/parsing")
-        targetClass.set("OpenFGALexer")
+        targetOutputDir.set(file("src/generated/java/dev/openfga/intellijplugin/parsing"))
         purgeOldFiles.set(true)
     }
 
     generateParser {
         sourceFile.set(file("src/main/java/dev/openfga/intellijplugin/parsing/openfga.bnf"))
-        targetRoot.set("src/generated/java")
+        targetRootOutputDir.set(file("src/generated/java"))
         pathToParser.set("dev/openfga/intellijplugin/parsing/OpenFGAParser.java")
         pathToPsiRoot.set("dev/openfga/intellijplugin/psi")
         purgeOldFiles.set(true)
