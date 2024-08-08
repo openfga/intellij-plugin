@@ -3,22 +3,7 @@
   "dark": true,
   "author": "",
   "editorScheme": "/OpenFGA_Dark.xml",
-  "colors": {
-    "primaryForeground": "#eeffff",
-    "primaryBackground": "#141517"
-  },
-  "ui": {
-    "*": {
-      "background": "primaryBackground",
-      "separatorColor": "primaryForeground",
-      "foreground": "primaryForeground"
-    },
-    "ToolWindow": {
-      "Header": {
-        "inactiveBackground": "primaryBackground"
-      }
-    }
-  }
+  "ui": {}
 }
 
 
