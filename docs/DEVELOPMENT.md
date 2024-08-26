@@ -6,12 +6,16 @@ Read the [OpenFGA Contribution Process](https://github.com/openfga/.github/blob/
 
 ### Run Build & tests
 
-```./gradlew build```
+`./gradlew build`
+
+### Run IDE extension in sandbox
+
+`./gradlew runIde`
 
 ## Distribution (Optional)
 
 To generate an installable build of this plugin, you can do the following:
 
-```./gradlew buildPlugin```
+`./gradlew buildPlugin`
 
 [Instructions for installation from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#install_plugin_from_disk)
