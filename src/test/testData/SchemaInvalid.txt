@@ -1,0 +1,11 @@
+OpenFGA Model File
+  PsiElement(OpenFGA.MODEL)('model')
+  PsiElement(OpenFGA.END_OF_LINE)('\n')
+  PsiElement(OpenFGA.IDENT1)('  ')
+  PsiElement(OpenFGA.SCHEMA)('schema')
+  PsiWhiteSpace(' ')
+  PsiErrorElement:OpenFGA.SCHEMA_VERSION expected, got 'a'
+    PsiElement(OpenFGA.ALPHA_NUMERIC)('a')
+  PsiElement(BAD_CHARACTER)('.')
+  PsiElement(OpenFGA.ALPHA_NUMERIC)('b')
+  PsiElement(OpenFGA.END_OF_LINE)('\n')
