@@ -1,3 +1,16 @@
+## v0.1.3
+
+### [0.1.3](https://github.com/openfga/intellij-plugin/compare/v0.1.2...v0.1.3) (2024-09-06)
+
+Added
+* add support for 2024.2.* based IDEs
+
+Fixed
+- `tupleuserset-not-direct` is now prioritized above `no-entrypoint` error (inherited from https://github.com/openfga/language/releases/tag/pkg%2Fjava%2Fv0.2.0-beta.2)
+- correct based index for reported errors that was causing the wrong location to be highlighted (inherited from https://github.com/openfga/language/releases/tag/pkg%2Fjava%2Fv0.2.0-beta.2)
+
+Removed
+- Remove UI theme (we now only offer an editor theme) (#30)
 
 ## v0.1.2
 

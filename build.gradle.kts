@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.2"
+version = "0.1.3"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
@@ -23,7 +23,7 @@ dependencies {
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.17.0")
-    implementation("dev.openfga:openfga-language:v0.2.0-beta.1")
+    implementation("dev.openfga:openfga-language:v0.2.0-beta.2")
 
     implementation("com.diffplug.spotless:spotless-plugin-gradle:6.25.0")
 
@@ -118,7 +118,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("233")
-        untilBuild.set("241.*")
+        untilBuild.set("242.*")
     }
 
     signPlugin {

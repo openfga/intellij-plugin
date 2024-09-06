@@ -45,16 +45,16 @@ jobs:
     strategy:
       matrix:
         ide-version:
-          - clion:2024.1
-          - goland:2024.1
-          - ideaIC:2024.1
+          - clion:2024.2
+          - goland:2024.2
+          - ideaIC:2024.2
+          - ideaIU:2024.2
+          - phpstorm:2024.2
+          - pycharmPC:2024.2
+          - pycharmPY:2024.2
+          - riderRD:2024.2
+          - webstorm:2024.2
           - ideaIC:LATEST-EAP-SNAPSHOT
-          - ideaIU:2024.1
-          - phpstorm:2024.1
-          - pycharmPC:2024.1
-          - pycharmPY:2024.1
-          - riderRD:2024.1
-          - webstorm:2024.1
     steps:
       - name: Check out repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
