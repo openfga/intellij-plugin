@@ -86,6 +86,7 @@ tasks {
         pathToParser.set("dev/openfga/intellijplugin/parsing/OpenFGAParser.java")
         pathToPsiRoot.set("dev/openfga/intellijplugin/psi")
         purgeOldFiles.set(true)
+        dependsOn(generateLexer) // The lexer must be generated before parser otherwise we get build errors
     }
 
     test {
