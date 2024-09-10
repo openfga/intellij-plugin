@@ -11,8 +11,27 @@ jobs:
   test:
     uses: ./.github/workflows/main.yaml
 
+  # First create the release so that we have somewhere to upload the distribution zips to
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+
+      - name: Create Release
+        uses: Roang-zero1/github-create-release-action@57eb9bdce7a964e48788b9e78b5ac766cb684803 # v3.0.1
+        with:
+          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
+          changelog_file: CHANGELOG.md
+          create_draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish:
-    needs: test
+    needs: [test, create-release]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,29 +59,12 @@ jobs:
           PRIVATE_KEY_PASSWORD: ${{ secrets.JETBRAINS_PRIVATE_KEY_PASSWORD }}
         run: ./gradlew publishPlugin
 
-      # Upload artifact as a release asset
+      # Upload artifact as a release asset and move out of draft
       - name: Upload Release Asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: ${{ github.event.release.tag_name }}
-        run: gh release upload "${{ env.TAG_NAME }}" ./build/distributions/*
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          gh release upload "${{ env.TAG_NAME }}" ./build/distributions/*
+          gh release edit "${{ env.TAG_NAME }}" --draft=false
 
-  create-release:
-    runs-on: ubuntu-latest
-    needs: publish
-    permissions:
-      contents: write
-      packages: write # publish a new github release
-    steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 0
-
-      - name: Create Release
-        uses: Roang-zero1/github-create-release-action@57eb9bdce7a964e48788b9e78b5ac766cb684803 # v3.0.1
-        with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-          changelog_file: CHANGELOG.md
-          create_draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
