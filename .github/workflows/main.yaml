@@ -45,15 +45,15 @@ jobs:
     strategy:
       matrix:
         ide-version:
-          - clion:2024.2
-          - goland:2024.2
-          - ideaIC:2024.2
-          - ideaIU:2024.2
-          - phpstorm:2024.2
-          - pycharmPC:2024.2
-          - pycharmPY:2024.2
-          - riderRD:2024.2
-          - webstorm:2024.2
+          - clion:2024.3
+          - goland:2024.3
+          - ideaIC:2024.3
+          - ideaIU:2024.3
+          - phpstorm:2024.3
+          - pycharmPC:2024.3
+          - pycharmPY:2024.3
+          - riderRD:2024.3
+          - webstorm:2024.3
           - ideaIC:LATEST-EAP-SNAPSHOT
     steps:
       - name: Check out repository

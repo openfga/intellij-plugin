@@ -20,16 +20,7 @@
     <change-notes><![CDATA[
     <h2>New Features</h2>
     <ul>
-        <li>add support for 2024.2.* based IDEs</li>
-    </ul>
-    <h2>Bug Fixes</h2>
-    <ul>
-        <li>`tupleuserset-not-direct` is now prioritized above `no-entrypoint` error</li>
-        <li>correct based index for reported errors that was causing the wrong location to be highlighted</li>
-    </ul>
-    <h2>Removed</h2>
-    <ul>
-        <li>Remove UI theme (we now only offer an editor theme)</li>
+        <li>add support for IntelliJ 2024.3.* based IDEs</li>
     </ul>
     ]]></change-notes>
 
