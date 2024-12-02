@@ -1,3 +1,10 @@
+## v0.1.4
+
+### [0.1.4](https://github.com/openfga/intellij-plugin/compare/v0.1.3...v0.1.4) (2024-12-02)
+
+Added
+- add support for IDEs based on IntelliJ IDEA 2024.3.* (https://github.com/openfga/intellij-plugin/pull/65) - thanks @edlundin
+
 ## v0.1.3
 
 ### [0.1.3](https://github.com/openfga/intellij-plugin/compare/v0.1.2...v0.1.3) (2024-09-06)
