@@ -6,6 +6,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.ui.ComponentValidator;
+import com.intellij.openapi.ui.TextBrowseFolderListener;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.ui.DocumentAdapter;
@@ -46,11 +47,9 @@ public class OpenFGASettingsComponent {
                 .getPanel();
         clearCliPathField.addActionListener(evt -> cliPathField.setText(""));
         cliPathField.setEditable(false);
+
         cliPathField.addBrowseFolderListener(
-                "Select",
-                "Select OpenFGA cli path",
-                null,
-                new FileChooserDescriptor(true, false, false, false, false, false));
+                new TextBrowseFolderListener(new FileChooserDescriptor(true, false, false, false, false, false)));
 
         installValidator(cliPathField, this::validateCliPath);
         cliPathField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {

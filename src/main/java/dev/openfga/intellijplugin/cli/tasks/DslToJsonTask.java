@@ -79,7 +79,7 @@ public class DslToJsonTask extends Task.Backgroundable implements CliProcessTask
     public Void onSuccess(File stdOutFile, File stdErrFile) throws IOException, CliTaskException {
         Files.copy(stdOutFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         ApplicationManager.getApplication()
-                .invokeLater(() -> show(new GeneratedFile(dslFile.getProject(), targetPath)), ModalityState.NON_MODAL);
+                .invokeLater(() -> show(new GeneratedFile(dslFile.getProject(), targetPath)), ModalityState.nonModal());
         return null;
     }
 

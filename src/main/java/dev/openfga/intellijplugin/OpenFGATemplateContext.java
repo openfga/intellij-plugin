@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class OpenFGATemplateContext extends TemplateContextType {
     protected OpenFGATemplateContext() {
-        super("OPENFGA_CONTEXT", "OpenFGA authorization model DSL");
+        super("OpenFGA authorization model DSL");
     }
 
     @Override
