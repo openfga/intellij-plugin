@@ -1,3 +1,10 @@
+## v0.1.5
+
+### [0.1.5](https://github.com/openfga/intellij-plugin/compare/v0.1.4...v0.1.5) (2025-03-03)
+
+Added
+- add support for 2025.* based IDEs ([#80](https://github.com/openfga/intellij-plugin/pull/80))
+
 ## v0.1.4
 
 ### [0.1.4](https://github.com/openfga/intellij-plugin/compare/v0.1.3...v0.1.4) (2024-12-02)
