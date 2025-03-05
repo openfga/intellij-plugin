@@ -3,7 +3,6 @@
 ## Bump version number
 
 - Update the `version` number in `build.gradle.kts`
-- Update the `pluginVersion` number in `gradle.properties`
 
 ## Update the CHANGELOG
 
