@@ -1,5 +1,8 @@
 name: Pull Request build and test
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
   workflow_dispatch:
