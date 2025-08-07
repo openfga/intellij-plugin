@@ -9,6 +9,8 @@ on:
 
 jobs:
   test:
+    permissions:
+      contents: read
     uses: ./.github/workflows/main.yaml
 
   # First create the release so that we have somewhere to upload the distribution zips to
