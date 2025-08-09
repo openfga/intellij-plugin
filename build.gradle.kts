@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.5"
+version = "0.1.6"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
@@ -119,7 +119,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("233")
-        untilBuild.set("251.*")
+        untilBuild.set("252.*")
     }
 
     signPlugin {

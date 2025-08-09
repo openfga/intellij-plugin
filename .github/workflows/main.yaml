@@ -41,22 +41,22 @@ jobs:
 
 
   test_compatibility:
-    name: Test plugin compatibility with IntelliJ Platform 2024.1
+    name: Test plugin compatibility with IntelliJ Platform 2025.2
     needs:
       - build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ide-version:
-          - clion:2024.3
-          - goland:2024.3
-          - ideaIC:2024.3
-          - ideaIU:2024.3
-          - phpstorm:2024.3
-          - pycharmPC:2024.3
-          - pycharmPY:2024.3
-          - riderRD:2024.3
-          - webstorm:2024.3
+          - clion:2025.2
+          - goland:2025.2
+          - ideaIC:2025.2
+          - ideaIU:2025.2
+          - phpstorm:2025.2
+          - pycharmPC:2025.2
+          - pycharmPY:2025.2
+          - riderRD:2025.2
+          - webstorm:2025.2
           # - ideaIC:LATEST-EAP-SNAPSHOT - Removed from testing as no YAML plugin exists yet
     steps:
       - name: Check out repository
