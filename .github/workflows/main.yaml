@@ -45,19 +45,6 @@ jobs:
     needs:
       - build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ide-version:
-          - clion:2025.2
-          - goland:2025.2
-          - ideaIC:2025.2
-          - ideaIU:2025.2
-          - phpstorm:2025.2
-          - pycharmPC:2025.2
-          - pycharmPY:2025.2
-          - riderRD:2025.2
-          - webstorm:2025.2
-          # - ideaIC:LATEST-EAP-SNAPSHOT - Removed from testing as no YAML plugin exists yet
     steps:
       - name: Check out repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -68,13 +55,16 @@ jobs:
           name: ${{ env.PLUGIN_ARTIFACT_NAME }}
           path: ${{ env.DIST_FOLDER }}
 
+      - name: Generate the IntelliJ Platform IDE versions list for the plugin verifier
+        run: ./gradlew generateIdeVersionsList
+
       - name: Verify Plugin on IntelliJ Platforms
         id: verify
         uses: ChrisCarini/intellij-platform-plugin-verifier-action@9e042b5f5996a37ac60ea718afb53a5ca1a6bb78 # v2.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          ide-versions: ${{ matrix.ide-version }}
+          ide-versions: build/verifier-plugin/intellij-platform-plugin-verifier-action-ide-versions-file.txt
           plugin-location: '${{ env.DIST_FOLDER }}/*.zip'
 
       - name: Get log file path and print contents
