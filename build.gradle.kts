@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.5"
+version = "0.1.6"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
@@ -118,8 +118,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("233")
-        untilBuild.set("251.*")
+        sinceBuild.set(providers.gradleProperty("plugin.sinceBuild"))
+        untilBuild.set(providers.gradleProperty("plugin.untilBuild"))
     }
 
     signPlugin {
@@ -130,6 +130,83 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+
+    register("generateIdeVersionsList") {
+        group = "verification"
+        description = "Generate IDE versions list for plugin verifier"
+
+        val outputFile = layout.buildDirectory.file("verifier-plugin/intellij-platform-plugin-verifier-action-ide-versions-file.txt")
+        outputs.file(outputFile)
+
+        val sinceBuildValue = providers.gradleProperty("plugin.sinceBuild")
+        val untilBuildValue = providers.gradleProperty("plugin.untilBuild")
+        // Enable incremental builds / caching
+        inputs.property("plugin.sinceBuild", sinceBuildValue)
+        inputs.property("plugin.untilBuild", untilBuildValue)
+
+        doLast {
+            val BASE_YEAR = 2000
+
+            fun buildNumberToVersion(buildNumber: Int): String? {
+                val buildStr = buildNumber.toString()
+                if (buildStr.length < 3) return null
+
+                val year = BASE_YEAR + buildStr.substring(0, 2).toInt()
+                val version = buildStr.last().toString().toInt()
+
+                if (version > 3) return null
+
+                return "$year.$version"
+            }
+
+            fun generateOptimizedVersions(since: Int, until: Int): List<String> {
+                val sinceYear = BASE_YEAR + since.toString().substring(0, 2).toInt()
+                val untilYear = BASE_YEAR + until.toString().substring(0, 2).toInt()
+
+                val versions = mutableSetOf<String>()
+
+                // Always include the exact since version
+                buildNumberToVersion(since)?.let { versions.add(it) }
+
+                // For intermediary years, only include the latest version (.3)
+                // We do this to reduce the number of versions while still covering all major releases
+                // Otherwise, we would run out of space on default GitHub Actions runners
+                for (year in (sinceYear + 1) until untilYear) {
+                    val yearCode = year - BASE_YEAR
+                    val latestBuildNumber = yearCode * 10 + 3 // Always .3 for intermediary years
+                    buildNumberToVersion(latestBuildNumber)?.let { versions.add(it) }
+                }
+
+                // Always include the exact until version (if different from since)
+                if (until != since) {
+                    buildNumberToVersion(until)?.let { versions.add(it) }
+                }
+
+                return versions.sorted()
+            }
+
+            val sinceVersion = sinceBuildValue.get().replace(".*", "").toInt()
+            val untilVersion = untilBuildValue.get().replace(".*", "").toInt()
+
+            println("Optimizing versions from build $sinceVersion to $untilVersion")
+
+            val versions = generateOptimizedVersions(sinceVersion, untilVersion)
+
+            val ideVersions = buildList {
+                versions.forEach { version ->
+                    add("ideaIC:$version")
+                    add("ideaIU:$version")
+                }
+            }.sorted()
+
+            outputFile.get().asFile.parentFile.mkdirs()
+            outputFile.get().asFile.writeText(ideVersions.joinToString("\n"))
+
+            println("Generated optimized ${ideVersions.size} IDE versions (reduced from potential ${(untilVersion - sinceVersion + 1) * 2})")
+            println("Versions: ${versions.joinToString(", ")}")
+            println("Output: ${outputFile.get().asFile}")
+        }
     }
 }
 
