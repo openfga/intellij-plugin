@@ -118,8 +118,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set(project.property("plugin.sinceBuild").toString())
-        untilBuild.set(project.property("plugin.untilBuild").toString())
+        sinceBuild.set(providers.gradleProperty("plugin.sinceBuild"))
+        untilBuild.set(providers.gradleProperty("plugin.untilBuild"))
     }
 
     signPlugin {
@@ -141,6 +141,9 @@ tasks {
 
         val sinceBuildValue = providers.gradleProperty("plugin.sinceBuild")
         val untilBuildValue = providers.gradleProperty("plugin.untilBuild")
+        // Enable incremental builds / caching
+        inputs.property("plugin.sinceBuild", sinceBuildValue)
+        inputs.property("plugin.untilBuild", untilBuildValue)
 
         doLast {
             val BASE_YEAR = 2000
