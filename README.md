@@ -2,10 +2,9 @@
 
 This is the official IntelliJ plugin for [OpenFGA](https://openfga.dev/).
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/openfga/vscode-ext/blob/main/LICENSE)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/openfga/intellij-plugin/badge)](https://securityscorecards.dev/viewer/?uri=github.com/openfga/intellij-plugin)
 [![Join our community](https://img.shields.io/badge/slack-cncf_%23openfga-40abb8.svg?logo=slack)](https://openfga.dev/community)
-[![Twitter](https://img.shields.io/twitter/follow/openfga?color=%23179CF0&logo=twitter&style=flat-square "@openfga on Twitter")](https://twitter.com/openfga)
-
+[![X](https://img.shields.io/twitter/follow/openfga?color=%23179CF0&logo=X&style=flat-square "@openfga on X")](https://x.com/openfga)
 
 ## About
 
@@ -17,7 +16,7 @@ OpenFGA is designed to make it easy for application builders to model their perm
 
 - [OpenFGA Documentation](https://openfga.dev/docs)
 - [OpenFGA API Documentation](https://openfga.dev/api/service)
-- [OpenFGA on Twitter](https://twitter.com/openfga)
+- [OpenFGA on X](https://x.com/openfga)
 - [OpenFGA Community](https://openfga.dev/community)
 - [Zanzibar Academy](https://zanzibar.academy)
 - [Google's Zanzibar Paper (2019)](https://research.google/pubs/pub48190/)
