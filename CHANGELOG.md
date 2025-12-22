@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.7] - 2025-12-22
+
+Added
+- add support for 2025.3.* based IDEs
+
 ## [0.1.6] - 2025-08-07
 
 Added
