@@ -168,11 +168,12 @@ public class ServerDialog extends DialogWrapper {
         switch (authenticationMethod) {
             case NONE -> {}
             case API_TOKEN -> server.storeApiToken(new String(apiTokenField.getPassword()));
-            case OIDC -> server.storeOidc(new Oidc(
-                    oidcTokenEndpointField.getText(),
-                    oidcClientIdField.getText(),
-                    new String(oidcClientSecretField.getPassword()),
-                    oidcScopeField.getText()));
+            case OIDC ->
+                server.storeOidc(new Oidc(
+                        oidcTokenEndpointField.getText(),
+                        oidcClientIdField.getText(),
+                        new String(oidcClientSecretField.getPassword()),
+                        oidcScopeField.getText()));
         }
         return server;
     }
