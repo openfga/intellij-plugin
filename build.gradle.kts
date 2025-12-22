@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.6"
+version = "0.1.7"
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
