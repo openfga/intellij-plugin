@@ -53,8 +53,9 @@ jobs:
         ide-version:
           - 'ideaIC:2023.3'
           - 'ideaIC:2024.3'
-          - 'ideaIC:2025.3'
-          - 'ideaIU:2025.3'
+          - 'ideaIU:2023.3'
+          - 'ideaIU:2024.3'
+          - 'intellijIdea:2025.3'  # 2025.3+ uses unified distribution
     steps:
       - name: Check out repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -78,7 +79,8 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf "$RUNNER_TOOL_CACHE"
           echo "Disk space after cleanup:"
           df -h
 
