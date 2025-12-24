@@ -42,10 +42,20 @@ jobs:
 
 
   test_compatibility:
-    name: Test plugin compatibility with IntelliJ Platform
+    name: Test plugin compatibility with IntelliJ Platform ${{ matrix.ide-version }}
     needs:
       - build
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 2  # Limit parallelization to avoid overwhelming runners
+      matrix:
+        ide-version:
+          - 'ideaIC:2023.3'
+          - 'ideaIC:2024.3'
+          - 'ideaIU:2023.3'
+          - 'ideaIU:2024.3'
+          - 'ideaIU:2025.3.1'
     steps:
       - name: Check out repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -62,16 +72,25 @@ jobs:
           name: ${{ env.PLUGIN_ARTIFACT_NAME }}
           path: ${{ env.DIST_FOLDER }}
 
-      - name: Generate the IntelliJ Platform IDE versions list for the plugin verifier
-        run: ./gradlew generateIdeVersionsList
+      - name: Free up disk space
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf "$RUNNER_TOOL_CACHE"
+          echo "Disk space after cleanup:"
+          df -h
 
-      - name: Verify Plugin on IntelliJ Platforms
+      - name: Verify Plugin on IntelliJ Platform ${{ matrix.ide-version }}
         id: verify
         uses: ChrisCarini/intellij-platform-plugin-verifier-action@d04116ac843966179c3d74ed298cfce2ddfbb0ad # v2.0.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          ide-versions: build/verifier-plugin/intellij-platform-plugin-verifier-action-ide-versions-file.txt
+          ide-versions: ${{ matrix.ide-version }}
           plugin-location: '${{ env.DIST_FOLDER }}/*.zip'
 
       - name: Get log file path and print contents
