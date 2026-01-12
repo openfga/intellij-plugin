@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.7] - 2025-12-22
+## [0.1.7] - 2026-01-12
 
 Added
-- add support for 2025.3.* based IDEs
+- add support for 2025.3.* based IDE
+- add OpenSSF scorecard badge
 
 ## [0.1.6] - 2025-08-07
 
