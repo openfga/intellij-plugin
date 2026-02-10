@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("java")
     id("jacoco")
-    id("com.diffplug.spotless") version "8.1.0"
-    id("org.jetbrains.kotlin.jvm") version "2.3.0"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("com.diffplug.spotless") version "8.2.1"
+    id("org.jetbrains.kotlin.jvm") version "2.3.10"
+    id("org.jetbrains.intellij.platform") version "2.11.0"
     id("org.jetbrains.grammarkit") version "2023.3.0.1"
 }
 
@@ -15,31 +15,56 @@ sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
     mavenCentral()
+
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
     implementation("org.antlr:antlr4:4.13.2")
-    implementation("dev.openfga:openfga-sdk:0.9.4")
+    implementation("dev.openfga:openfga-sdk:0.9.5")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.20.0")
     implementation("dev.openfga:openfga-language:v0.2.0-beta.2")
 
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.1.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.2.1")
 
     testImplementation("junit:junit:4.13.2")
+
+    // IntelliJ Platform dependencies
+    intellijPlatform {
+        intellijIdeaCommunity("2023.3")
+        bundledPlugins(
+            "org.intellij.intelliLang",
+            "org.jetbrains.plugins.yaml",
+            "com.intellij.java"
+        )
+        pluginVerifier()
+        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+    }
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2023.3")
-    type.set("IC") // Target IDE Platform
+// Configure IntelliJ Platform Gradle Plugin
+// Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
+intellijPlatform {
+    pluginConfiguration {
+        ideaVersion {
+            sinceBuild.set(providers.gradleProperty("plugin.sinceBuild"))
+            untilBuild.set(providers.gradleProperty("plugin.untilBuild"))
+        }
+    }
 
-    plugins.set(listOf(
-        "org.intellij.intelliLang",
-        "org.jetbrains.plugins.yaml",
-        "com.intellij.java"))
+    signing {
+        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
+        privateKey.set(System.getenv("PRIVATE_KEY"))
+        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
+    }
+
+    publishing {
+        token.set(System.getenv("PUBLISH_TOKEN"))
+    }
 }
 
 grammarKit {
@@ -59,6 +84,7 @@ spotless {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions.jvmTarget = JvmTarget.JVM_17
+    dependsOn("generateLexer", "generateParser")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -115,21 +141,6 @@ tasks {
 
     jacocoTestCoverageVerification {
         classDirectories.setFrom(instrumentCode)
-    }
-
-    patchPluginXml {
-        sinceBuild.set(providers.gradleProperty("plugin.sinceBuild"))
-        untilBuild.set(providers.gradleProperty("plugin.untilBuild"))
-    }
-
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
     }
 
     register("generateIdeVersionsList") {
