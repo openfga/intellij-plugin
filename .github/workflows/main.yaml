@@ -86,7 +86,7 @@ jobs:
 
       - name: Verify Plugin on IntelliJ Platform ${{ matrix.ide-version }}
         id: verify
-        uses: ChrisCarini/intellij-platform-plugin-verifier-action@d04116ac843966179c3d74ed298cfce2ddfbb0ad # v2.0.3
+        uses: ChrisCarini/intellij-platform-plugin-verifier-action@d38cf16ae3475a963aee2afa503af65e2484928d # v2.0.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
