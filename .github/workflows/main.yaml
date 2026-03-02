@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew check buildPlugin
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: '${{ env.PLUGIN_ARTIFACT_NAME }}'
           path: '${{ env.DIST_FOLDER }}/'
@@ -67,7 +67,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Download built plugin artifact
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
           name: ${{ env.PLUGIN_ARTIFACT_NAME }}
           path: ${{ env.DIST_FOLDER }}
@@ -86,7 +86,7 @@ jobs:
 
       - name: Verify Plugin on IntelliJ Platform ${{ matrix.ide-version }}
         id: verify
-        uses: ChrisCarini/intellij-platform-plugin-verifier-action@d38cf16ae3475a963aee2afa503af65e2484928d # v2.0.4
+        uses: ChrisCarini/intellij-platform-plugin-verifier-action@18a458f197299bbe26b125d98aed48df90857439 # v2.0.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
