@@ -24,13 +24,27 @@ OpenFGA is designed to make it easy for application builders to model their perm
 
 ## Installation
 
+### From JetBrains Marketplace
+
+Install directly from the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/24394-openfga), or from within your IDE:
+
+1. Go to **Settings** > **Plugins** > **Marketplace**
+2. Search for **OpenFGA**
+3. Click **Install**
+
 ### Manual Installation
+
+Alternatively, you can install the plugin from disk:
+
+1. Download the latest release zip from [GitHub Releases](https://github.com/openfga/intellij-plugin/releases), or build it yourself with `./gradlew buildPlugin` (output will be in `build/distributions/`)
+2. Go to **Settings** > **Plugins** > **⚙️** > **Install Plugin from Disk...**
+3. Select the plugin zip file
 
 ![manual_install.png](docs/manual_install.png)
 
 ## Usage
 
-* IDE and Editor theme `OpenFGA Dark`
+* OpenFGA syntax highlighting for dark and light themes
 ![openfga_dark_theme.png](docs/openfga_dark_theme.png)
 * DSL syntax support (associated with `.fga` and `.openfga` file extensions)
 ![syntax.png](docs/syntax.png)

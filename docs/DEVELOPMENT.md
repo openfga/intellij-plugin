@@ -1,4 +1,4 @@
-# Development and Contributing to the OpenFGA VS Code Extension
+# Development and Contributing to the OpenFGA IntelliJ Plugin
 
 Read the [OpenFGA Contribution Process](https://github.com/openfga/.github/blob/main/CONTRIBUTING.md) and the [OpenFGA Code of Conduct](https://github.com/openfga/.github/blob/main/CODE_OF_CONDUCT.md).
 
@@ -14,8 +14,8 @@ Read the [OpenFGA Contribution Process](https://github.com/openfga/.github/blob/
 
 ## Distribution (Optional)
 
-To generate an installable build of this plugin, you can do the following:
+To generate an installable build of this plugin:
 
 `./gradlew buildPlugin`
 
-[Instructions for installation from disk](https://www.jetbrains.com/help/idea/managing-plugins.html#install_plugin_from_disk)
+The plugin zip will be output to `build/distributions/`. You can then install it from disk by going to **Settings** > **Plugins** > **⚙️** > **Install Plugin from Disk...** and selecting the zip file.

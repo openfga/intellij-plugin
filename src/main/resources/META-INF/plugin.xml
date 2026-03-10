@@ -93,7 +93,10 @@
 
         <notificationGroup id="OpenFGA Notifications"
                            displayType="BALLOON"/>
-        <themeProvider id="60bcad08-acdb-40d0-b68a-151e2839f1c4" path="/OpenFGA_Dark.theme.json"/>
+        <additionalTextAttributes scheme="Darcula" file="/OpenFGA_Dark.xml"/>
+        <additionalTextAttributes scheme="IntelliJ Dark" file="/OpenFGA_Dark.xml"/>
+        <additionalTextAttributes scheme="IntelliJ Light" file="/OpenFGA_Light.xml"/>
+        <additionalTextAttributes scheme="Default" file="/OpenFGA_Light.xml"/>
 
         <multiHostInjector
                 implementation="dev.openfga.intellijplugin.inject.OpenFGAYamlInjector"/>
