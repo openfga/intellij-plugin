@@ -18,9 +18,9 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    <h2>New Features</h2>
+    <h2>Fixed</h2>
     <ul>
-        <li>add support for 2025.3.* based IDEs.</li>
+        <li>Removed invasive IDE theme, now using additionalTextAttributes for syntax highlighting</li>
     </ul>
     ]]></change-notes>
 
