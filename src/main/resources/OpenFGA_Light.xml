@@ -1,62 +1,62 @@
 <list>
     <option name="OPENFGA_KEYWORD">
         <value>
-            <option name="FOREGROUND" value="AAAAAA" />
+            <option name="FOREGROUND" value="555555" />
         </value>
     </option>
     <option name="OPENFGA_SCHEMA_VERSIONS">
         <value>
-            <option name="FOREGROUND" value="B5CEA8" />
+            <option name="FOREGROUND" value="1750EB" />
         </value>
     </option>
     <option name="OPENFGA_MODULE_NAME">
         <value>
-            <option name="FOREGROUND" value="79ED83" />
+            <option name="FOREGROUND" value="1A8C23" />
         </value>
     </option>
     <option name="OPENFGA_COMMENTS">
         <value>
-            <option name="FOREGROUND" value="737981" />
+            <option name="FOREGROUND" value="8C8C8C" />
         </value>
     </option>
     <option name="OPENFGA_TYPE_IDENTIFIER">
         <value>
-            <option name="FOREGROUND" value="79ED83" />
+            <option name="FOREGROUND" value="1A8C23" />
         </value>
     </option>
     <option name="OPENFGA_TYPE_REFERENCE">
         <value>
-            <option name="FOREGROUND" value="CEEC93" />
+            <option name="FOREGROUND" value="6E7B2B" />
         </value>
     </option>
     <option name="OPENFGA_RELATION_NAME">
         <value>
-            <option name="FOREGROUND" value="20F1F5" />
+            <option name="FOREGROUND" value="0D8E91" />
         </value>
     </option>
     <option name="OPENFGA_RELATION_REFERENCE">
         <value>
-            <option name="FOREGROUND" value="FFFFFF" />
+            <option name="FOREGROUND" value="1A1A1A" />
         </value>
     </option>
     <option name="OPENFGA_CONDITION_IDENTIFIER">
         <value>
-            <option name="FOREGROUND" value="79ED83" />
+            <option name="FOREGROUND" value="1A8C23" />
         </value>
     </option>
     <option name="OPENFGA_CONDITION_REFERENCE">
         <value>
-            <option name="FOREGROUND" value="CEEC93" />
+            <option name="FOREGROUND" value="6E7B2B" />
         </value>
     </option>
     <option name="OPENFGA_CONDITION_PARAM_IDENTIFIER">
         <value>
-            <option name="FOREGROUND" value="20F1F5" />
+            <option name="FOREGROUND" value="0D8E91" />
         </value>
     </option>
     <option name="OPENFGA_CONDITION_PARAM_TYPE">
         <value>
-            <option name="FOREGROUND" value="AAAAAA" />
+            <option name="FOREGROUND" value="555555" />
         </value>
     </option>
 </list>
