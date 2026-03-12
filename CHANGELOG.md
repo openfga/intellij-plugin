@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-03-12
+
+Fixed
+- removed invasive IDE theme, now using additionalTextAttributes for syntax highlighting ([#143](https://github.com/openfga/intellij-plugin/pull/143))
+
 ## [0.1.7] - 2026-01-12
 
 Added
@@ -58,7 +63,8 @@ Initial Release
 - feat: generate json file from DSL (requires OpenFGA CLI to be installed)
 - feat: configure servers in OpenFGA tool window
 
-[Unreleased]: https://github.com/openfga/intellij-plugin/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/openfga/intellij-plugin/compare/v0.1.8...HEAD
+[0.1.8]: https://github.com/openfga/intellij-plugin/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/openfga/intellij-plugin/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/openfga/intellij-plugin/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/openfga/intellij-plugin/compare/v0.1.4...v0.1.5
