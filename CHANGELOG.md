@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-04-05
+
+Added
+- add support for 2026.1.* based IDEs
+
 ## [0.1.8] - 2026-03-12
 
 Fixed
@@ -63,7 +68,8 @@ Initial Release
 - feat: generate json file from DSL (requires OpenFGA CLI to be installed)
 - feat: configure servers in OpenFGA tool window
 
-[Unreleased]: https://github.com/openfga/intellij-plugin/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/openfga/intellij-plugin/compare/v0.1.9...HEAD
+[0.1.9]: https://github.com/openfga/intellij-plugin/compare/v0.1.8...v0.1.9
 [0.1.8]: https://github.com/openfga/intellij-plugin/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/openfga/intellij-plugin/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/openfga/intellij-plugin/compare/v0.1.5...v0.1.6
