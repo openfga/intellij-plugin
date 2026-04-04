@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+Added
+- add support for 2026.1.* based IDEs
+
 ## [0.1.8] - 2026-03-12
 
 Fixed
