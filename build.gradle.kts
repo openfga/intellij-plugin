@@ -82,15 +82,17 @@ spotless {
     }
 }
 
+val javaVersion: String by project
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget = JvmTarget.JVM_17
+    compilerOptions.jvmTarget = JvmTarget.fromTarget(javaVersion)
     dependsOn("generateLexer", "generateParser")
 }
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
-    sourceCompatibility = "21"
-    targetCompatibility = "21"
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
     dependsOn("generateLexer", "generateParser")
 }
 

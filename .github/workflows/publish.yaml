@@ -43,10 +43,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Read Java version from gradle.properties
+        run: |
+          JAVA_VERSION=$(grep '^javaVersion=' gradle.properties | cut -d'=' -f2)
+          if ! [[ "$JAVA_VERSION" =~ ^[0-9]+$ ]]; then
+            echo "::error::Invalid Java version: $JAVA_VERSION"
+            exit 1
+          fi
+          echo "JAVA_VERSION=$JAVA_VERSION" >> "$GITHUB_ENV"
+
       - name: Setup Java
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
-          java-version: 17
+          java-version: ${{ env.JAVA_VERSION }}
           distribution: 'temurin'
 
       - name: Setup Gradle
