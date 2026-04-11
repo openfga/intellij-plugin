@@ -32,6 +32,7 @@ dependencies {
     implementation("com.diffplug.spotless:spotless-plugin-gradle:8.4.0")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.opentest4j:opentest4j:1.3.0")
 
     // IntelliJ Platform dependencies
     intellijPlatform {
