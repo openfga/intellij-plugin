@@ -22,3 +22,6 @@ updates:
       dependencies:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "gradle/actions"
+        versions: [">= 6.0.0, < 6.1.0"]
