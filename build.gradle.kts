@@ -33,6 +33,11 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.opentest4j:opentest4j:1.3.0")
+    // Workaround for https://github.com/JetBrains/intellij-platform-gradle-plugin/issues/2127
+    // IJPGP 2.14.0 dropped opentest4j from the fix classpath it assembles for IntelliJ's
+    // UrlClassLoader. testImplementation alone is not enough because IJPGP rebuilds the
+    // test task classpath from its own configurations; this targets the right one.
+    add("intellijPlatformTestRuntimeFixClasspath", "org.opentest4j:opentest4j:1.3.0")
 
     // IntelliJ Platform dependencies
     intellijPlatform {
