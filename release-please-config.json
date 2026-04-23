@@ -23,8 +23,7 @@
         { "type": "release", "section": "Miscellaneous", "hidden": true }
       ],
       "extra-files": [
-        { "type": "generic", "path": "build.gradle.kts" },
-        { "type": "generic", "path": "README.md" }
+        { "type": "generic", "path": "build.gradle.kts" }
       ]
     }
   }
