@@ -4,8 +4,8 @@ plugins {
     id("java")
     id("jacoco")
     id("com.diffplug.spotless") version "8.4.0"
-    id("org.jetbrains.kotlin.jvm") version "2.3.20"
-    id("org.jetbrains.intellij.platform") version "2.13.1"
+    id("org.jetbrains.kotlin.jvm") version "2.3.21"
+    id("org.jetbrains.intellij.platform") version "2.16.0"
     id("org.jetbrains.grammarkit") version "2023.3.0.3"
 }
 
@@ -23,7 +23,7 @@ repositories {
 
 dependencies {
     implementation("org.antlr:antlr4:4.13.2")
-    implementation("dev.openfga:openfga-sdk:0.9.7")
+    implementation("dev.openfga:openfga-sdk:0.9.9")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.20.0")
