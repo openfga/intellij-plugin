@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.1.10](https://github.com/openfga/intellij-plugin/compare/v0.1.9...v0.1.10) (2026-07-07)
+
+### Changed
+
+* bump `@openfga/language` package to the latest version
+
 
 ## [0.1.9] - 2026-04-05
 
