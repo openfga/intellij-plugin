@@ -7,17 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [0.1.10](https://github.com/openfga/intellij-plugin/compare/v0.1.9...v0.1.10) (2026-07-07)
 
+### Changed
 
-### Fixed
+* bump `@openfga/language` package to the latest version
 
-* extra files remove readme ([fe118f1](https://github.com/openfga/intellij-plugin/commit/fe118f1217ca2463636b24e63535d1f667b74f60))
-
-
-### Miscellaneous
-
-* release 0.1.10 ([393b851](https://github.com/openfga/intellij-plugin/commit/393b8510d36bc98c7f9f0dfdfb4871e833bb65bc))
-
-## [Unreleased]
 
 ## [0.1.9] - 2026-04-05
 
