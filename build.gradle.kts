@@ -27,7 +27,7 @@ dependencies {
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.20.0")
-    implementation("dev.openfga:openfga-language:v0.2.0-beta.2")
+    implementation("dev.openfga:openfga-language:0.2.1")
 
     implementation("com.diffplug.spotless:spotless-plugin-gradle:8.8.0")
 
