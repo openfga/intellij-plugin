@@ -13,7 +13,7 @@
         <li>Store file tuple file validation (tuples, tuple_file and tuple_files)</li>
         <li>Authorization model dsl file template</li>
         <li>Authorization model dsl live templates</li>
-        <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI to be installed)</li>
+        <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI</a> to be installed)</li>
         <li>Configure servers in OpenFGA tool window</li>
     </ul>
     ]]></description>
@@ -22,6 +22,7 @@
     <h2>Added</h2>
     <ul>
         <li>Add support for 2026.1.* based IDEs</li>
+        <li>Store file tuple file validation (tuples, tuple_file and tuple_files)</li>
     </ul>
     ]]></change-notes>
 

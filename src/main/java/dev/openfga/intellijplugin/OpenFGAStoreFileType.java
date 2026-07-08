@@ -13,7 +13,7 @@ public class OpenFGAStoreFileType extends LanguageFileType {
 
     /**
      * Returns whether the given file is an OpenFGA store file, i.e. a YAML file whose name ends
-     * with {@code fga.yaml} or {@code openfga.yaml}.
+     * with {@code .fga.yaml} or {@code .openfga.yaml}.
      */
     public static boolean isStoreFile(@Nullable final PsiFile file) {
         if (file == null) {
@@ -22,7 +22,7 @@ public class OpenFGAStoreFileType extends LanguageFileType {
 
         final String name = file.getName();
 
-        return name.endsWith("fga.yaml") || name.endsWith("openfga.yaml");
+        return name.endsWith(".fga.yaml") || name.endsWith(".openfga.yaml");
     }
 
     private OpenFGAStoreFileType() {

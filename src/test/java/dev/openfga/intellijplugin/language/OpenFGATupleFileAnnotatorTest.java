@@ -176,6 +176,15 @@ public class OpenFGATupleFileAnnotatorTest extends BasePlatformTestCase {
                 """);
     }
 
+    public void testTupleFilesEntryMustBeAFilePath() {
+        checkStoreFileHighlighting(
+                """
+                name: Test store
+                tuple_files:
+                  - <error descr="tuple_files entries must be file paths">key: value</error>
+                """);
+    }
+
     // Test scope: the same fields are supported and validated within tests
 
     public void testTestScopeTupleFileAndTupleFilesAreValid() {
@@ -240,6 +249,15 @@ public class OpenFGATupleFileAnnotatorTest extends BasePlatformTestCase {
 
     public void testNonStoreYamlFilesAreNotValidated() {
         myFixture.configureByText("config.yaml", """
+                tuple_file: ./tuples.txt
+                tuple_files: not-a-list
+                """);
+        myFixture.checkHighlighting();
+    }
+
+    public void testYamlFileMerelyEndingInFgaYamlIsNotValidated() {
+        // "myopenfga.yaml" has no "." before the suffix, so it is not a store file
+        myFixture.configureByText("myopenfga.yaml", """
                 tuple_file: ./tuples.txt
                 tuple_files: not-a-list
                 """);
