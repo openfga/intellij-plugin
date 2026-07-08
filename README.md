@@ -50,6 +50,7 @@ Alternatively, you can install the plugin from disk:
 ![syntax.png](docs/syntax.png)
 * DSL syntax injection for YAML store files (associated with `.fga.yaml` and `.openfga.yaml` file extensions)
 ![store_syntax.png](docs/store_syntax.png)
+* Store file tuple validation: `tuples`, `tuple_file` and `tuple_files` are optional and can be used together or individually, both globally and per test. Referenced tuple files must exist and use one of the supported extensions (`.json`, `.jsonl`, `.yaml`, `.yml`, `.csv`)
 * Authorization model dsl file template
 ![template.png](docs/template.png)
 * Authorization model dsl live templates

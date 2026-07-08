@@ -10,6 +10,7 @@
     Official <a href="https://openfga.dev/">OpenFGA</a> support plugin.<br>
     <ul>
         <li>DSL syntax support and validation</li>
+        <li>Store file tuple file validation (tuples, tuple_file and tuple_files)</li>
         <li>Authorization model dsl file template</li>
         <li>Authorization model dsl live templates</li>
         <li>Generate json file from DSL (requires <a href="https://github.com/openfga/cli">OpenFGA CLI to be installed)</li>
@@ -62,6 +63,10 @@
         <externalAnnotator
                 language="yaml"
                 implementationClass="dev.openfga.intellijplugin.language.OpenFGAStoreAnnotator"/>
+
+        <annotator
+                language="yaml"
+                implementationClass="dev.openfga.intellijplugin.language.OpenFGATupleFileAnnotator"/>
 
         <colorSettingsPage
                 implementation="dev.openfga.intellijplugin.OpenFGAColorSettingsPage"/>
