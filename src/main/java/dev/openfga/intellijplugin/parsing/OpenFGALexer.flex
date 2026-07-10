@@ -63,6 +63,7 @@ CONDITION_EXPRESSION=(\{[^\}]+\})
   {SCHEMA_VERSION}            { return SCHEMA_VERSION; }
   {END_OF_LINE}               { return END_OF_LINE; }
   {WHITESPACE}                { return TokenType.WHITE_SPACE; }
+  ^{WHITESPACE}+/{END_OF_LINE} { return TokenType.WHITE_SPACE; }
   ^{IDENT1}                   { return IDENT1; }
   ^{IDENT2}                   { return IDENT2; }
   ^{SINGLE_LINE_COMMENT}$     { return SINGLE_LINE_COMMENT; }

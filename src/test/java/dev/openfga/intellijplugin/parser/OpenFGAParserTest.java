@@ -65,6 +65,20 @@ public class OpenFGAParserTest extends ParsingTestCase {
                  """);
     }
 
+    public void testBlankLineWithWhitespace() throws Throwable {
+        // A blank line containing only whitespace between two `define` lines must
+        // not be tokenized as indentation (regression test for #163).
+        doCodeTest("""
+                 model
+                   schema 1.1
+                 type company
+                   relations
+                     define user: [user]
+                 \s\s\s\s
+                     define bla: user
+                 """);
+    }
+
     public void testComments() throws Throwable {
         doCodeTest("""
                  # This is a sample model
