@@ -46,10 +46,92 @@ dependencies {
     }
 }
 
+// Build the plugin's <change-notes> from the current release's section in
+// CHANGELOG.md. Section selection matches the shared release workflow's
+// parse-release.sh (openfga/.github) so the GitHub release and the Marketplace
+// "What's New" render the same content. Falls back to a safe pointer if the
+// section is missing rather than failing the publish.
+fun changeNotesFromChangelog(rawVersion: String): String {
+    val changelog = file("CHANGELOG.md")
+    if (!changelog.exists()) return "See the CHANGELOG for release notes."
+
+    // Match the version delimited by non-version characters, as parse-release.sh does.
+    val escaped = Regex.escape(rawVersion)
+    val versionPattern = Regex("""(^|[^0-9A-Za-z.-])$escaped([^0-9A-Za-z.-]|$)""")
+
+    val section = mutableListOf<String>()
+    var found = false
+    for (line in changelog.readLines()) {
+        if (line.startsWith("## ")) {
+            if (found) break
+            if (versionPattern.containsMatchIn(line)) {
+                found = true
+                continue
+            }
+        }
+        if (found) section.add(line)
+    }
+
+    if (!found) return "See the CHANGELOG for release notes."
+
+    // Render inline markdown to HTML: `code` -> <code>, [text](url) -> <a>.
+    // Escape HTML-special chars first; markdown delimiters survive so the
+    // regexes still match. href values also escape " to avoid closing early.
+    fun renderInline(text: String): String {
+        var s = text
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+        s = Regex("""\[([^\]]+)]\(([^)]+)\)""").replace(s) { m ->
+            val href = m.groupValues[2].replace("\"", "&quot;")
+            """<a href="$href">${m.groupValues[1]}</a>"""
+        }
+        s = Regex("""`([^`]+)`""").replace(s) { m -> "<code>${m.groupValues[1]}</code>" }
+        return s
+    }
+
+    // ### Group -> <h2>, `* `/`- ` items -> <li>, everything else -> <p>.
+    val html = StringBuilder()
+    var listOpen = false
+    fun closeList() {
+        if (listOpen) {
+            html.append("</ul>\n")
+            listOpen = false
+        }
+    }
+    for (raw in section) {
+        val line = raw.trim()
+        when {
+            line.isEmpty() -> {}
+            line.startsWith("### ") -> {
+                closeList()
+                html.append("<h2>").append(line.removePrefix("### ").trim()).append("</h2>\n")
+            }
+            line.startsWith("* ") || line.startsWith("- ") -> {
+                if (!listOpen) {
+                    html.append("<ul>\n")
+                    listOpen = true
+                }
+                val item = line.removePrefix("* ").removePrefix("- ").trim()
+                html.append("<li>").append(renderInline(item)).append("</li>\n")
+            }
+            else -> {
+                closeList()
+                html.append("<p>").append(renderInline(line)).append("</p>\n")
+            }
+        }
+    }
+    closeList()
+
+    val rendered = html.toString().trim()
+    return rendered.ifEmpty { "See the CHANGELOG for release notes." }
+}
+
 // Configure IntelliJ Platform Gradle Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 intellijPlatform {
     pluginConfiguration {
+        changeNotes.set(provider { changeNotesFromChangelog(project.version.toString()) })
         ideaVersion {
             sinceBuild.set(providers.gradleProperty("plugin.sinceBuild"))
             untilBuild.set(providers.gradleProperty("plugin.untilBuild"))
