@@ -24,6 +24,7 @@ public class OpenFGAColorSettingsPage implements ColorSettingsPage {
         new AttributesDescriptor("Condition reference", OpenFGASyntaxHighlighter.CONDITION_REFERENCE),
         new AttributesDescriptor("Condition param identifier", OpenFGASyntaxHighlighter.CONDITION_PARAM_IDENTIFIER),
         new AttributesDescriptor("Condition param type", OpenFGASyntaxHighlighter.CONDITION_PARAM_TYPE),
+        new AttributesDescriptor("Condition identifier", OpenFGASyntaxHighlighter.CONDITION_IDENTIFIER),
     };
 
     @Nullable
