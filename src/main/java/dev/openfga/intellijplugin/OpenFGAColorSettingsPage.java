@@ -17,6 +17,7 @@ public class OpenFGAColorSettingsPage implements ColorSettingsPage {
         new AttributesDescriptor("Comment", OpenFGASyntaxHighlighter.COMMENT),
         new AttributesDescriptor("Type identifier", OpenFGASyntaxHighlighter.TYPE_IDENTIFIER),
         new AttributesDescriptor("Relation name", OpenFGASyntaxHighlighter.RELATION_NAME),
+        new AttributesDescriptor("Relation reference", OpenFGASyntaxHighlighter.RELATION_REFERENCE),
         new AttributesDescriptor("Schema version", OpenFGASyntaxHighlighter.SCHEMA_VERSIONS),
     };
 
