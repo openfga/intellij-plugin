@@ -69,10 +69,8 @@ public class OpenFGAParserTest extends ParsingTestCase {
     }
 
     public void testBlankLineWithWhitespace() throws Throwable {
-        // A blank line containing only whitespace between two `define` lines must
-        // not be tokenized as indentation (regression test for #163). Before the
-        // fix the trailing spaces became an IDENT2 token, so the parser reported
-        // "OpenFGA.DEFINE expected". Assert the model parses without error nodes.
+        // Regression test for #163: a whitespace-only blank line must not be
+        // tokenized as indentation.
         String code = "model\n"
                 + "  schema 1.1\n"
                 + "type company\n"
@@ -84,6 +82,22 @@ public class OpenFGAParserTest extends ParsingTestCase {
         ensureParsed(file);
         assertNull(
                 "Model with a whitespace-only blank line should parse without errors",
+                PsiTreeUtil.findChildOfType(file, PsiErrorElement.class));
+    }
+
+    public void testTrailingWhitespaceOnlyLineAtEof() throws Throwable {
+        // Regression test for #163: a whitespace-only final line with no
+        // trailing newline must not be tokenized as indentation.
+        String code = "model\n"
+                + "  schema 1.1\n"
+                + "type company\n"
+                + "  relations\n"
+                + "    define user: [user]\n"
+                + "    "; // whitespace-only final line, EOF right after
+        PsiFile file = createPsiFile("trailingWhitespaceOnlyLineAtEof", code);
+        ensureParsed(file);
+        assertNull(
+                "Model ending with a whitespace-only line should parse without errors",
                 PsiTreeUtil.findChildOfType(file, PsiErrorElement.class));
     }
 
