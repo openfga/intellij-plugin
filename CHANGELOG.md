@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.11](https://github.com/openfga/intellij-plugin/compare/v0.1.10...v0.1.11) (2026-07-17)
+
+
+### Added
+
+* support 2026.2.* based IDEs ([d855da1](https://github.com/openfga/intellij-plugin/commit/d855da1b64fc9de5a41d4ca21077951a20847a8b))
+* support 2026.2.* based IDEs ([#179](https://github.com/openfga/intellij-plugin/issues/179)) ([2953183](https://github.com/openfga/intellij-plugin/commit/295318362a9ac1aa51c797d6d6cbec39cd5d8e78))
+
+
+### Miscellaneous
+
+* release 0.1.11 ([3af62e5](https://github.com/openfga/intellij-plugin/commit/3af62e5d80a180de0053d8e0a903194a96258bb0))
+
 ## [0.1.10](https://github.com/openfga/intellij-plugin/compare/v0.1.9...v0.1.10) (2026-07-07)
 
 ### Changed
