@@ -6,6 +6,7 @@ import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import dev.openfga.intellijplugin.OpenFGALanguage;
+import dev.openfga.intellijplugin.OpenFGAStoreFileType;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.yaml.psi.YAMLKeyValue;
@@ -27,8 +28,7 @@ public class OpenFGAYamlInjector implements MultiHostInjector {
 
     private boolean shouldInject(PsiElement context) {
         return context instanceof YAMLKeyValue
-                && (context.getContainingFile().getName().endsWith("fga.yaml")
-                        || context.getContainingFile().getName().endsWith("openfga.yaml"))
+                && OpenFGAStoreFileType.isStoreFile(context.getContainingFile())
                 && ((YAMLKeyValue) context).getValue() instanceof YAMLScalarList
                 && ((YAMLKeyValue) context).getKeyText().equals("model");
     }
