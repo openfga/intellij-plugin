@@ -34,11 +34,6 @@
             <option name="FOREGROUND" value="0D8E91" />
         </value>
     </option>
-    <option name="OPENFGA_RELATION_REFERENCE">
-        <value>
-            <option name="FOREGROUND" value="1A1A1A" />
-        </value>
-    </option>
     <option name="OPENFGA_CONDITION_IDENTIFIER">
         <value>
             <option name="FOREGROUND" value="1A8C23" />
