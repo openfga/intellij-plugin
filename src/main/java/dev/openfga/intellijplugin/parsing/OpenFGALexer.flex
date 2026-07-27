@@ -14,6 +14,21 @@ import static dev.openfga.intellijplugin.psi.OpenFGATypes.*;
   public OpenFGALexer() {
     this((java.io.Reader)null);
   }
+
+  /**
+   * Returns true when only spaces or tabs remain between the end of the
+   * current match and the end of the buffer, i.e. the match is part of a
+   * whitespace-only final line.
+   */
+  private boolean isWhitespaceOnlyToEof() {
+    for (int i = zzMarkedPos; i < zzEndRead; i++) {
+      char c = zzBuffer.charAt(i);
+      if (c != ' ' && c != '\t') {
+        return false;
+      }
+    }
+    return true;
+  }
 %}
 
 %public
@@ -63,8 +78,10 @@ CONDITION_EXPRESSION=(\{[^\}]+\})
   {SCHEMA_VERSION}            { return SCHEMA_VERSION; }
   {END_OF_LINE}               { return END_OF_LINE; }
   {WHITESPACE}                { return TokenType.WHITE_SPACE; }
-  ^{IDENT1}                   { return IDENT1; }
-  ^{IDENT2}                   { return IDENT2; }
+  // Whitespace-only lines are plain whitespace, not indentation (#163).
+  ^{WHITESPACE}+/{END_OF_LINE} { return TokenType.WHITE_SPACE; }
+  ^{IDENT1}                   { return isWhitespaceOnlyToEof() ? TokenType.WHITE_SPACE : IDENT1; }
+  ^{IDENT2}                   { return isWhitespaceOnlyToEof() ? TokenType.WHITE_SPACE : IDENT2; }
   ^{SINGLE_LINE_COMMENT}$     { return SINGLE_LINE_COMMENT; }
   {CONDITION_EXPRESSION}      { return CONDITION_EXPRESSION; }
 }

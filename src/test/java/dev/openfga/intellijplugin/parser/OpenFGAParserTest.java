@@ -1,6 +1,9 @@
 package dev.openfga.intellijplugin.parser;
 
 import dev.openfga.intellijplugin.parsing.OpenFGAParserDefinition;
+import com.intellij.psi.PsiErrorElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.ParsingTestCase;
 
 public class OpenFGAParserTest extends ParsingTestCase {
@@ -63,6 +66,39 @@ public class OpenFGAParserTest extends ParsingTestCase {
                     relations
                         define admin: [user]
                  """);
+    }
+
+    public void testBlankLineWithWhitespace() throws Throwable {
+        // Regression test for #163: a whitespace-only blank line must not be
+        // tokenized as indentation.
+        String code = "model\n"
+                + "  schema 1.1\n"
+                + "type company\n"
+                + "  relations\n"
+                + "    define user: [user]\n"
+                + "    \n" // blank line with trailing whitespace
+                + "    define bla: user\n";
+        PsiFile file = createPsiFile("blankLineWithWhitespace", code);
+        ensureParsed(file);
+        assertNull(
+                "Model with a whitespace-only blank line should parse without errors",
+                PsiTreeUtil.findChildOfType(file, PsiErrorElement.class));
+    }
+
+    public void testTrailingWhitespaceOnlyLineAtEof() throws Throwable {
+        // Regression test for #163: a whitespace-only final line with no
+        // trailing newline must not be tokenized as indentation.
+        String code = "model\n"
+                + "  schema 1.1\n"
+                + "type company\n"
+                + "  relations\n"
+                + "    define user: [user]\n"
+                + "    "; // whitespace-only final line, EOF right after
+        PsiFile file = createPsiFile("trailingWhitespaceOnlyLineAtEof", code);
+        ensureParsed(file);
+        assertNull(
+                "Model ending with a whitespace-only line should parse without errors",
+                PsiTreeUtil.findChildOfType(file, PsiErrorElement.class));
     }
 
     public void testComments() throws Throwable {
