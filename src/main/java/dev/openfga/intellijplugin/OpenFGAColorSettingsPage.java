@@ -18,6 +18,13 @@ public class OpenFGAColorSettingsPage implements ColorSettingsPage {
         new AttributesDescriptor("Type identifier", OpenFGASyntaxHighlighter.TYPE_IDENTIFIER),
         new AttributesDescriptor("Relation name", OpenFGASyntaxHighlighter.RELATION_NAME),
         new AttributesDescriptor("Schema version", OpenFGASyntaxHighlighter.SCHEMA_VERSIONS),
+        new AttributesDescriptor("Relation reference", OpenFGASyntaxHighlighter.RELATION_REFERENCE),
+        new AttributesDescriptor("Module name", OpenFGASyntaxHighlighter.MODULE_NAME),
+        new AttributesDescriptor("Type reference", OpenFGASyntaxHighlighter.TYPE_REFERENCE),
+        new AttributesDescriptor("Condition reference", OpenFGASyntaxHighlighter.CONDITION_REFERENCE),
+        new AttributesDescriptor("Condition param identifier", OpenFGASyntaxHighlighter.CONDITION_PARAM_IDENTIFIER),
+        new AttributesDescriptor("Condition param type", OpenFGASyntaxHighlighter.CONDITION_PARAM_TYPE),
+        new AttributesDescriptor("Condition identifier", OpenFGASyntaxHighlighter.CONDITION_IDENTIFIER),
     };
 
     @Nullable
