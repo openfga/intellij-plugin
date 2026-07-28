@@ -20,10 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 * **lexer:** treat whitespace-only lines as skippable whitespace ([#163](https://github.com/openfga/intellij-plugin/issues/163)) ([#187](https://github.com/openfga/intellij-plugin/issues/187)) ([8828c12](https://github.com/openfga/intellij-plugin/commit/8828c12185fd93e181efaa867a89349b9fd89375))
 
 
-### Miscellaneous
-
-* release 0.1.12 ([e50708b](https://github.com/openfga/intellij-plugin/commit/e50708b7cc402e1b49d27151080330da9bf1539d))
-
 ## [0.1.11](https://github.com/openfga/intellij-plugin/compare/v0.1.10...v0.1.11) (2026-07-17)
 
 
