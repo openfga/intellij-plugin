@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.12](https://github.com/openfga/intellij-plugin/compare/v0.1.11...v0.1.12) (2026-07-28)
+
+
+### Added
+
+* support multiple tuple files in the store file ([#182](https://github.com/openfga/intellij-plugin/issues/182)) ([9ab3b70](https://github.com/openfga/intellij-plugin/commit/9ab3b708db4375dfac77336ff3aded92e8625800))
+
+
+### Fixed
+
+* add reference attributes in color settings page ([#190](https://github.com/openfga/intellij-plugin/issues/190)) ([c7fb695](https://github.com/openfga/intellij-plugin/commit/c7fb6950a2c00351ec3589f083ef5e0ba1f587e3))
+* let relation references inherit the scheme's identifier color ([#189](https://github.com/openfga/intellij-plugin/issues/189)) ([1377984](https://github.com/openfga/intellij-plugin/commit/1377984a777a0a3008918dcf6f1d8aa225d56c3e))
+* **lexer:** treat whitespace-only lines as skippable whitespace ([#163](https://github.com/openfga/intellij-plugin/issues/163)) ([#187](https://github.com/openfga/intellij-plugin/issues/187)) ([8828c12](https://github.com/openfga/intellij-plugin/commit/8828c12185fd93e181efaa867a89349b9fd89375))
+
+
 ## [0.1.11](https://github.com/openfga/intellij-plugin/compare/v0.1.10...v0.1.11) (2026-07-17)
 
 
