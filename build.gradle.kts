@@ -5,7 +5,7 @@ plugins {
     id("jacoco")
     id("com.diffplug.spotless") version "8.10.2"
     id("org.jetbrains.kotlin.jvm") version "2.4.20"
-    id("org.jetbrains.intellij.platform") version "2.18.1"
+    id("org.jetbrains.intellij.platform") version "2.19.0"
     id("org.jetbrains.grammarkit") version "2023.3.0.4"
 }
 
