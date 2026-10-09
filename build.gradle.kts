@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("java")
     id("jacoco")
-    id("com.diffplug.spotless") version "8.10.2"
+    id("com.diffplug.spotless") version "8.10.3"
     id("org.jetbrains.kotlin.jvm") version "2.4.20"
     id("org.jetbrains.intellij.platform") version "2.19.0"
     id("org.jetbrains.grammarkit") version "2023.3.0.4"
@@ -23,13 +23,13 @@ repositories {
 
 dependencies {
     implementation("org.antlr:antlr4:4.13.2")
-    implementation("dev.openfga:openfga-sdk:0.10.1")
+    implementation("dev.openfga:openfga-sdk:0.11.0")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
-    implementation("org.apache.commons:commons-lang3:3.20.0")
+    implementation("org.apache.commons:commons-lang3:3.21.0")
     implementation("dev.openfga:openfga-language:0.2.1")
 
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.10.2")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.10.3")
 
     testImplementation("junit:junit:4.13.2")
 
