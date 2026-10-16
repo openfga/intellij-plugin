@@ -158,7 +158,7 @@ grammarKit {
 spotless {
     java {
         target("src/main/java/dev/openfga/intellijplugin/**/*.java")
-        palantirJavaFormat()
+        palantirJavaFormat("2.102.0")
         removeUnusedImports()
         importOrder()
     }

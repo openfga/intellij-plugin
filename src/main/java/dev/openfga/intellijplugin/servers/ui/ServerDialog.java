@@ -97,12 +97,11 @@ public class ServerDialog extends DialogWrapper {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            var newInnerPanel =
-                    switch ((AuthenticationMethod) e.getItem()) {
-                        case NONE -> noAuthPanel;
-                        case API_TOKEN -> apiTokenPanel;
-                        case OIDC -> oidcPanel;
-                    };
+            var newInnerPanel = switch ((AuthenticationMethod) e.getItem()) {
+                case NONE -> noAuthPanel;
+                case API_TOKEN -> apiTokenPanel;
+                case OIDC -> oidcPanel;
+            };
             SwingUtilities.invokeLater(() -> {
                 authPanel.removeAll();
                 authPanel.add(newInnerPanel, BorderLayout.CENTER);
