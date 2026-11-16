@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     implementation("org.antlr:antlr4:4.13.2")
-    implementation("dev.openfga:openfga-sdk:0.11.0")
+    implementation("dev.openfga:openfga-sdk:0.11.2")
     implementation("org.dmfs:oauth2-essentials:0.22.1")
     implementation("org.dmfs:httpurlconnection-executor:1.22.1")
     implementation("org.apache.commons:commons-lang3:3.21.0")
