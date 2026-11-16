@@ -52,25 +52,51 @@ jobs:
           path: '${{ env.DIST_FOLDER }}/'
 
 
+  verifier_matrix:
+    name: Read plugin verifier IDE list
+    runs-on: ubuntu-latest
+    outputs:
+      ides: ${{ steps.ides.outputs.ides }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Read pluginVerifier.ides from gradle.properties
+        id: ides
+        run: |
+          IDES=$(grep '^pluginVerifier.ides=' gradle.properties | cut -d'=' -f2- \
+            | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -v '^$' | jq -R . | jq -sc .)
+          if [ "$IDES" = "[]" ] || [ -z "$IDES" ]; then
+            echo "::error::pluginVerifier.ides is missing or empty in gradle.properties"
+            exit 1
+          fi
+          echo "ides=$IDES" >> "$GITHUB_OUTPUT"
+
   test_compatibility:
-    name: Test plugin compatibility with IntelliJ Platform ${{ matrix.ide-version }}
+    name: Test plugin compatibility with IntelliJ Platform ${{ matrix.ide }}
     needs:
       - build
+      - verifier_matrix
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 2  # Limit parallelization to avoid overwhelming runners
       matrix:
-        ide-version:
-          - 'ideaIC:2023.3'
-          - 'ideaIC:2024.3'
-          - 'ideaIU:2023.3'
-          - 'ideaIU:2024.3'
-          - 'ideaIU:2025.3'
-          - 'ideaIU:2026.1'
-          - 'ideaIU:2026.2'
-          - 'ideaIU:2026.3'
+        ide: ${{ fromJSON(needs.verifier_matrix.outputs.ides) }}
     steps:
+      # Runs before Java setup: it clears the runner tool cache, which is where setup-java installs the JDK.
+      - name: Free up disk space
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf "$RUNNER_TOOL_CACHE"
+          echo "Disk space after cleanup:"
+          df -h
+
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -89,34 +115,13 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'temurin'
 
-      - name: Download built plugin artifact
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      - name: Verify plugin on IntelliJ Platform ${{ matrix.ide }}
+        run: ./gradlew verifyPlugin -PpluginVerifier.ides=${{ matrix.ide }}
+
+      - name: Upload plugin verifier report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: ${{ env.PLUGIN_ARTIFACT_NAME }}
-          path: ${{ env.DIST_FOLDER }}
-
-      - name: Free up disk space
-        run: |
-          echo "Disk space before cleanup:"
-          df -h
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf "$RUNNER_TOOL_CACHE"
-          echo "Disk space after cleanup:"
-          df -h
-
-      - name: Verify Plugin on IntelliJ Platform ${{ matrix.ide-version }}
-        id: verify
-        uses: ChrisCarini/intellij-platform-plugin-verifier-action@18a458f197299bbe26b125d98aed48df90857439 # v2.0.5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          ide-versions: ${{ matrix.ide-version }}
-          plugin-location: '${{ env.DIST_FOLDER }}/*.zip'
-
-      - name: Get log file path and print contents
-        run: |
-          echo "The verifier log file [${{steps.verify.outputs.verification-output-log-filename}}] contents : " ;
-          cat ${{steps.verify.outputs.verification-output-log-filename}}
+          name: plugin-verifier-report-${{ matrix.ide }}
+          path: build/reports/pluginVerifier/
+          if-no-files-found: ignore
