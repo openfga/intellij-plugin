@@ -115,6 +115,9 @@ jobs:
         with:
           ide-versions: ${{ matrix.ide-version }}
           plugin-location: '${{ env.DIST_FOLDER }}/*.zip'
+          # Pinned: resolving LATEST calls the GitHub API and fails in the action's container
+          # https://github.com/ChrisCarini/intellij-platform-plugin-verifier-action/issues/112
+          verifier-version: '1.411'
 
       - name: Get log file path and print contents
         run: |
