@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.14](https://github.com/openfga/intellij-plugin/compare/v0.1.13...v0.1.14) (2026-11-17)
+
+
+### Miscellaneous
+
+* release 0.1.14 ([c4affcd](https://github.com/openfga/intellij-plugin/commit/c4affcdcd5d93d5d1d3647e916cff67fc9de524a))
+
 ## [0.1.13](https://github.com/openfga/intellij-plugin/compare/v0.1.12...v0.1.13) (2026-11-16)
 
 
