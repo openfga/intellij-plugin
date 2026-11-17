@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [0.1.14](https://github.com/openfga/intellij-plugin/compare/v0.1.13...v0.1.14) (2026-11-17)
 
 
-### Miscellaneous
+### Security
 
-* release 0.1.14 ([244e04f](https://github.com/openfga/intellij-plugin/commit/244e04fda5f2a6adb9623cfb0ecd5afac4ca7002))
+* bump openfga-sdk to 0.11.2 to resolve [GHSA-c949-2vhm-4ghg](https://github.com/openfga/java-sdk/security/advisories/GHSA-c949-2vhm-4ghg) ([#224](https://github.com/openfga/intellij-plugin/issues/224)) ([3acfe3d](https://github.com/openfga/intellij-plugin/commit/3acfe3d22116e020a825c0b423a62edbe7a06646))
 
 ## [0.1.13](https://github.com/openfga/intellij-plugin/compare/v0.1.12...v0.1.13) (2026-11-16)
 
