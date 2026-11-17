@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "dev.openfga.intellijplugin"
-version = "0.1.13" // x-release-please-version
+version = "0.1.14" // x-release-please-version
 sourceSets["main"].java.srcDirs("src/main/java", "src/generated/java")
 
 repositories {
