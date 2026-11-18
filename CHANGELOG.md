@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.14](https://github.com/openfga/intellij-plugin/compare/v0.1.13...v0.1.14) (2026-11-17)
+
+
+### Security
+
+* bump `openfga-language` from 0.2.1 to 0.3.0 ([pkg/java/v0.3.0](https://github.com/openfga/language/releases/tag/pkg%2Fjava%2Fv0.3.0)) to drop its transitive Jackson 2.15.3 dependency, which carried open advisories against `jackson-databind` (including [CVE-2026-54512](https://github.com/advisories/GHSA-j3rv-43j4-c7qm), [CVE-2026-54513](https://github.com/advisories/GHSA-rmj7-2vxq-3g9f), [CVE-2026-68497](https://github.com/advisories/GHSA-q4xh-88c3-wmh7), [CVE-2026-91776](https://github.com/advisories/GHSA-wv8q-qhhj-9h54), [CVE-2026-91777](https://github.com/advisories/GHSA-cxp5-3px4-pw24)) and `jackson-core` (including [CVE-2026-68494](https://github.com/advisories/GHSA-r7wm-3cxj-wff9), [CVE-2026-89425](https://github.com/advisories/GHSA-7hhh-6rmp-j9qf)). The plugin now resolves Jackson 2.22.4 and snakeyaml 2.5. ([#226](https://github.com/openfga/intellij-plugin/pull/226)) ([0267dab](https://github.com/openfga/intellij-plugin/commit/0267dab6453b750735d240fa506d58640cb71fef))
+* bump `openfga-sdk` from 0.11.0 to 0.11.2 to drop its transitive OpenTelemetry 1.65.0 dependency, affected by [CVE-2026-118259](https://github.com/advisories/GHSA-ccrj-gw8r-854m). The plugin now resolves OpenTelemetry 1.67.0. ([#224](https://github.com/openfga/intellij-plugin/pull/224)) ([3acfe3d](https://github.com/openfga/intellij-plugin/commit/3acfe3d22116e020a825c0b423a62edbe7a06646))
+* with these bumps, no artifact on the plugin's runtime classpath has a known advisory in the OSV or GitHub Advisory databases
+
+
+### Changed
+
+* `openfga-language` 0.3.0 adds support for the `$expression` reserved condition name on type restrictions and reports correct error locations when type or schema lines have trailing comments
+
 ## [0.1.13](https://github.com/openfga/intellij-plugin/compare/v0.1.12...v0.1.13) (2026-11-16)
 
 
