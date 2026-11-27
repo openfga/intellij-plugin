@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("java")
     id("jacoco")
-    id("com.diffplug.spotless") version "8.11.0"
+    id("com.diffplug.spotless") version "8.12.0"
     id("org.jetbrains.kotlin.jvm") version "2.4.21"
     id("org.jetbrains.intellij.platform") version "2.20.1"
     id("org.jetbrains.grammarkit") version "2023.3.0.4"
@@ -31,7 +31,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.22.0")
     implementation("dev.openfga:openfga-language:0.3.0")
 
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.11.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.12.0")
 
     testImplementation("junit:junit:4.13.2")
 
