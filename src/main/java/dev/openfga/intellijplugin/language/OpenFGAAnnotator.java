@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.ExternalAnnotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiFile;
+import dev.openfga.language.DslToJsonTransformer;
 import dev.openfga.language.errors.DslErrorsException;
 import dev.openfga.language.errors.ParsingError;
 import dev.openfga.language.errors.StartEnd;
@@ -23,6 +24,18 @@ public class OpenFGAAnnotator extends ExternalAnnotator<String, List<? extends P
 
     @Override
     public @Nullable List<? extends ParsingError> doAnnotate(@NotNull final String collectedInfo) {
+        final DslToJsonTransformer.Result result = new DslToJsonTransformer().parseDsl(collectedInfo);
+        if (result.IsFailure()) {
+            return result.getErrors();
+        }
+
+        // A module file (starting with `module` instead of `model`) is only one part of a modular model: it has no
+        // schema version and may reference types and relations defined in other modules, so it cannot be validated
+        // as a complete model on its own. Only its syntax is checked.
+        if (result.getAuthorizationModel().getSchemaVersion() == null) {
+            return null;
+        }
+
         try {
             ModelValidator.validateDsl(collectedInfo);
         } catch (IOException e) {
