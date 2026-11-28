@@ -114,6 +114,19 @@ public class OpenFGAParserTest extends ParsingTestCase {
                  """);
     }
 
+    public void testTrailingComments() throws Throwable {
+        doCodeTest("""
+                 model # This is a comment that should be allowed
+                   schema 1.1 # This is a comment that should be allowed
+                 type user # This is a comment that should be allowed
+                 type group # module: core, file: core.fga
+                   relations # This is a comment that should be allowed
+                     define member: [user, group#member] # This is a comment that should be allowed
+                     define admin: [user#thing]  # This is a comment that should be allowed
+                     define viewer: member or admin\t# This is a comment that should be allowed
+                 """);
+    }
+
     // Invalid models
 
     public void testNoSchemaInvalid() throws Throwable {
@@ -204,15 +217,5 @@ public class OpenFGAParserTest extends ParsingTestCase {
                     define reader: [user]
                 """);
     }
-
-//    public void testInlineComments() throws Throwable {
-//        doCodeTest("""
-//                 model
-//                   schema 1.1
-//                 type user # This is a comment that should be allowed
-//                   relations # This is a comment that should be allowed
-//                     define admin: [user] # This is a comment that should be allowed
-//                 """);
-//    }
 
 }

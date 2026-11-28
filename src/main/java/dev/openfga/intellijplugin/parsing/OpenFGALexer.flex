@@ -45,7 +45,10 @@ WHITESPACE=[\ \t]
 IDENT1=((\ {2})|\t)
 IDENT2=((\ {4})|(\t{2}))
 SINGLE_LINE_COMMENT=[ \t]*#+[^\n]*
-// SINGLE_TRAILING_COMMENT=\s+#+[^\n]*
+// A comment that follows other content on the same line. It must be preceded by
+// whitespace so that a `#` in a userset restriction (e.g. `[group#member]`) is
+// still lexed as a HASH.
+TRAILING_COMMENT={WHITESPACE}+#[^\r\n]*
 CONDITION_EXPRESSION=(\{[^\}]+\})
 
 %%
@@ -83,6 +86,7 @@ CONDITION_EXPRESSION=(\{[^\}]+\})
   ^{IDENT1}                   { return isWhitespaceOnlyToEof() ? TokenType.WHITE_SPACE : IDENT1; }
   ^{IDENT2}                   { return isWhitespaceOnlyToEof() ? TokenType.WHITE_SPACE : IDENT2; }
   ^{SINGLE_LINE_COMMENT}$     { return SINGLE_LINE_COMMENT; }
+  {TRAILING_COMMENT}          { return TRAILING_COMMENT; }
   {CONDITION_EXPRESSION}      { return CONDITION_EXPRESSION; }
 }
 

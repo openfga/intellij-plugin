@@ -20,9 +20,12 @@ public interface OpenFGATokenSets {
             OpenFGATypes.CONDITION,
             OpenFGATypes.WITH);
 
-    TokenSet COMMENTS = TokenSet.create(OpenFGATypes.HEADER_MULTI_LINE_COMMENT, OpenFGATypes.MULTI_LINE_COMMENT);
+    TokenSet COMMENTS = TokenSet.create(
+            OpenFGATypes.HEADER_MULTI_LINE_COMMENT, OpenFGATypes.MULTI_LINE_COMMENT, OpenFGATypes.TRAILING_COMMENT);
 
-    TokenSet SINGLE_LINE_COMMENT = TokenSet.create(OpenFGATypes.COMMENT);
+    // Trailing comments are not part of the grammar: registering them as comment tokens makes the
+    // parser skip them, so they are allowed at the end of any line.
+    TokenSet SINGLE_LINE_COMMENT = TokenSet.create(OpenFGATypes.COMMENT, OpenFGATypes.TRAILING_COMMENT);
 
     TokenSet SCHEMA_VERSIONS = TokenSet.create(OpenFGATypes.SCHEMA_VERSION);
 }

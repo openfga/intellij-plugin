@@ -13,6 +13,11 @@
   elementTypeClass="dev.openfga.intellijplugin.parsing.OpenFGAElementType"
   tokenTypeClass="dev.openfga.intellijplugin.parsing.OpenFGATokenType"
 
+  tokens=[
+    // Not referenced by any rule: the parser skips it as a comment token (see OpenFGAParserDefinition)
+    TRAILING_COMMENT="TRAILING_COMMENT"
+  ]
+
 }
 
 openfgaFile ::= main
